@@ -6,7 +6,12 @@ import { useMemo, useState } from 'react';
 
 export function Table() {
 	const [columnOrder] = useState(['NAME', 'SINGLE_VALUE', 'USAGE', 'DESC']);
-	const [sorting, setSorting] = useState([]);
+	const [sorting, setSorting] = useState([
+		{
+			id: 'NAME',
+			desc: false,
+		},
+	]);
 	const [data] = useState(data_json.attributes);
 
 	const columns = useMemo(() => columns_template, []);
@@ -23,6 +28,8 @@ export function Table() {
 			sorting,
 		},
 	});
+
+	console.log(sorting);
 
 	return (
 		<div className={styles.block}>
@@ -74,7 +81,7 @@ export function Table() {
 								<tr key={row.id}>
 									{row.getVisibleCells().map(cell => {
 										return (
-											<td className={styles.td} key={cell.id} title={cell.getValue()}>
+											<td className={styles.td} key={cell.id} title={cell.getValue().toString()}>
 												{flexRender(cell.column.columnDef.cell, cell.getContext())}
 											</td>
 										);

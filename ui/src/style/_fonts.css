@@ -1,0 +1,27 @@
+@font-face {
+	font-family: Panton;
+	font-weight: 400;
+	font-display: swap;
+	src: url('../fonts/Panton-Regular.ttf');
+}
+
+@font-face {
+	font-family: Panton;
+	font-weight: 500;
+	font-display: swap;
+	src: url('../fonts/Panton-SemiBold.ttf');
+}
+
+@font-face {
+	font-family: Panton;
+	font-weight: 600;
+	font-display: swap;
+	src: url('../fonts/Panton-Bold.ttf');
+}
+
+@font-face {
+	font-family: Panton;
+	font-weight: 900;
+	font-display: swap;
+	src: url('../fonts/Panton-Black.ttf');
+}
