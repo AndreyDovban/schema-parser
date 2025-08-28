@@ -1,0 +1,84 @@
+:root {
+	/* monmax width */
+	--max-width: 1920px;
+	--min-width: 320px;
+
+	/* margin. padding, gap */
+	--s-1: 4px;
+	--s-2: 8px;
+	--s-3: 12px;
+	--s-4: 16px;
+	--s-5: 24px;
+	--s-6: 32px;
+	--s-7: 48px;
+
+	/* radius */
+	--r-1: 8px;
+	--r-2: 12px;
+	--r-3: 16px;
+	--r-4: 24px;
+	--r-5: 32px;
+	--r-6: 48px;
+	--r-7: 50%;
+
+	/* adaptive size */
+	--adaptive-1: 2%;
+	--adaptive-2: 4%;
+	--adaptive-3: 8%;
+	--adaptive-4: 12%;
+
+	/* font header */
+	--font-h1: 46px/66px montserrat, sans-serif;
+	--font-h2: 28px/38px montserrat, sans-serif;
+	--font-h3: 24px/34px montserrat, sans-serif;
+
+	/* font not variable */
+	--font-l1: 16px/26px montserrat, sans-serif;
+	--font-l2: 14px/24px montserrat, sans-serif;
+	--font-l3: 14px/16px montserrat, sans-serif;
+
+	/* font variable */
+	--font-p1: 16px/26px montserrat, sans-serif;
+	--font-p2: 16px/26px montserrat, sans-serif;
+}
+
+@media (max-width: 1860px) {
+	/* empty */
+}
+
+@media (min-width: 1860px) {
+	/* empty */
+	:root {
+		--adaptive-1: 60px;
+		--adaptive-2: 100px;
+		--adaptive-3: 140px;
+		--adaptive-4: 180px;
+	}
+}
+
+@media (max-width: 1200px) {
+	/* empty */
+}
+
+@media (max-width: 960px) {
+	:root {
+		--font-h1: 32px/46px montserrat, sans-serif;
+		--font-h3: 16px/26px montserrat, sans-serif;
+		--font-p1: 14px/24px montserrat, sans-serif;
+	}
+}
+
+@media (max-width: 640px) {
+	:root {
+		--font-h2: 24px/34px montserrat, sans-serif;
+		--font-p2: 14px/24px montserrat, sans-serif;
+	}
+}
+
+@media (max-width: 480px) {
+	/* empty */
+}
+
+@media (max-width: 320px) {
+	/* empty */
+}

@@ -1,0 +1,41 @@
+.tag {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 32px;
+	padding: var(--s-2) var(--s-4);
+
+	font: var(--font-l3);
+	font-weight: 500;
+
+	border-radius: var(--r-1);
+}
+
+.sertificates {
+	background: var(--brown);
+}
+
+.docs {
+	background: var(--darkgoldenrod);
+}
+
+.save {
+	background: var(--cadetblue);
+}
+
+.news {
+	background: var(--seagreen);
+}
+
+.learn {
+	background: var(--teal);
+}
+
+.faq {
+	background: var(--steelblue);
+}
+
+.application {
+	background: var(--slateblue);
+}

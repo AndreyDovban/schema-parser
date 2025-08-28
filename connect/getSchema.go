@@ -41,7 +41,6 @@ func GetSchema(conn *ldap.Conn, baseDN string) (*Schema, error) {
 	schema := &Schema{}
 
 	for _, v := range sr.Entries {
-		fmt.Println(v.GetAttributeValues("attributeTypes"))
 		attributeTypes := v.GetAttributeValues("attributeTypes")
 		for _, a := range attributeTypes {
 

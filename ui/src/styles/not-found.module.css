@@ -1,0 +1,53 @@
+.not_found {
+	flex-grow: 1;
+	background: var(--background-gradient);
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-6);
+	align-items: center;
+	justify-content: center;
+
+	padding-block: var(--s-6);
+}
+
+.icon {
+	width: 60px;
+	height: 60px;
+	fill: var(--icon-primary);
+}
+
+.title {
+	font: var(--font-h1);
+	font-weight: 600;
+	color: var(--red);
+}
+
+.error_title {
+	font: var(--font-h3);
+	font-weight: 600;
+	color: var(--red);
+}
+
+.description {
+	max-width: 540px;
+
+	font: var(--font-p1);
+	font-weight: 600;
+	color: var(--text-secondary);
+	text-align: center;
+}
+
+.button {
+	width: 240px;
+	font: var(--font-p2);
+	font-weight: 600;
+}
+
+@media (max-width: 960px) {
+	.description {
+		max-width: 420px;
+	}
+}

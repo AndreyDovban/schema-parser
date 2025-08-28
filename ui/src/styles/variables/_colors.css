@@ -1,0 +1,185 @@
+:root {
+	/* palete */
+	--red: #e2112e;
+	--red-dark: #b50e25ff;
+	--white: #ffff;
+	--slateblue: #595bd480;
+	--steelblue: #3cabdb80;
+	--brown: #e2112e80;
+	--darkgoldenrod: #fd820980;
+	--cadetblue: #04c7be80;
+	--seagreen: #35c75980;
+	--teal: #056c7780;
+	--grey-50: #f9fafbff;
+	--grey-100: #f3f4f6ff;
+	--grey-200: #e5e7ebff;
+	--grey-300: #d1d5dbff;
+	--grey-400: #9ca3afff;
+	--grey-500: #6b7280ff;
+	--grey-600: #4b5563ff;
+	--grey-700: #374151ff;
+	--grey-800: #1f2937ff;
+	--grey-900: #111827ff;
+	--grey-950: #030712ff;
+	--recovery-logo-gradient: linear-gradient(130deg, #e2112e 60%, #ce0a1a 100%);
+	--viewer-logo-gradient: linear-gradient(130deg, #04c7be 60%, #00b3aa 100%);
+	--generator-logo-gradient: linear-gradient(130deg, #0679bb 60%, #0065a7 100%);
+	--insight-logo-gradient: linear-gradient(130deg, #35c759 60%, #21b345 100%);
+
+	/* background */
+	--background: var(--grey-900);
+	--on-background: var(--grey-800);
+	--background-secondary: var(--grey-900);
+	--background-gradient: linear-gradient(180deg, rgb(31 41 55 / 100%) 0%, rgb(17 24 39 / 100%) 100%);
+	--background-tertiary: var(--grey-950);
+
+	/* icon */
+	--icon-primary: var(--grey-600);
+	--icon-secondary: var(--grey-500);
+
+	/* border */
+	--border-primary: var(--grey-700);
+
+	/* text */
+	--text-primary: var(--grey-100);
+	--on-text-primary: var(--red);
+	--text-secondary: var(--grey-400);
+	--text-tertiary: var(--grey-500);
+
+	/* container */
+	--container-primary: var(--red);
+	--container-on-primary: var(--red-dark);
+	--container-text-primary: var(--grey-100);
+	--container-on-text-primary: var(--grey-100);
+	--container-secondary: var(--grey-100);
+	--container-on-secondary: var(--grey-400);
+	--container-text-secondary: var(--grey-800);
+	--container-on-text-secondary: var(--grey-800);
+	--container-tertiary: var(--grey-100);
+	--container-on-tertiary: var(--grey-400);
+	--container-text-tertiary: var(--grey-800);
+	--container-on-text-tertiary: var(--grey-800);
+	--container-quaternary: var(--red);
+	--container-on-quaternary: var(--red-dark);
+	--container-text-quaternary: var(--grey-100);
+	--container-on-text-quaternary: var(--grey-100);
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: var(--grey-900);
+		--on-background: var(--grey-800);
+		--background-secondary: var(--grey-900);
+		--background-gradient: linear-gradient(180deg, rgb(31 41 55 / 100%) 0%, rgb(17 24 39 / 100%) 100%);
+		--background-tertiary: var(--grey-950);
+
+		--icon-primary: var(--grey-600);
+		--icon-secondary: var(--grey-500);
+
+		--border-primary: var(--grey-700);
+
+		--text-primary: var(--grey-100);
+		--on-text-primary: var(--red);
+		--text-secondary: var(--grey-400);
+		--text-tertiary: var(--grey-500);
+		
+		--container-primary: var(--red);
+		--container-on-primary: var(--red-dark);
+		--container-text-primary: var(--grey-100);
+		--container-on-text-primary: var(--grey-100);
+		--container-secondary: var(--grey-100);
+		--container-on-secondary: var(--grey-400);
+		--container-text-secondary: var(--grey-800);
+		--container-on-text-secondary: var(--grey-800);
+		--container-tertiary: var(--grey-100);
+		--container-on-tertiary: var(--grey-400);
+		--container-text-tertiary: var(--grey-800);
+		--container-on-text-tertiary: var(--grey-800);
+		--container-quaternary: var(--red);
+		--container-on-quaternary: var(--red-dark);
+		--container-text-quaternary: var(--grey-100);
+		--container-on-text-quaternary: var(--grey-100);
+	}
+}
+*/
+
+[data-theme='light'] {
+	/* background */
+	--background: var(--grey-100);
+	--on-background: var(--white);
+	--background-secondary: var(--white);
+	--background-gradient: linear-gradient(180deg, rgb(229 231 235 / 100%) 0%, rgb(243 244 246 / 100%) 100%);
+	--background-tertiary: var(--grey-400);
+
+	/* icon */
+	--icon-primary: var(--grey-400);
+	--icon-secondary: var(--grey-400);
+
+	/* border */
+	--border-primary: var(--grey-300);
+
+	/* text */
+	--text-primary: var(--grey-800);
+	--on-text-primary: var(--red);
+	--text-secondary: var(--grey-500);
+	--text-tertiary: var(--grey-400);
+
+	/* container */
+	--container-primary: var(--red);
+	--container-on-primary: var(--red-dark);
+	--container-text-primary: var(--white);
+	--container-on-text-primary: var(--white);
+	--container-secondary: var(--grey-500);
+	--container-on-secondary: var(--grey-400);
+	--container-text-secondary: var(--grey-100);
+	--container-on-text-secondary: var(--grey-800);
+	--container-tertiary: var(--grey-100);
+	--container-on-tertiary: var(--grey-400);
+	--container-text-tertiary: var(--grey-800);
+	--container-on-text-tertiary: var(--grey-800);
+	--container-quaternary: var(--grey-400);
+	--container-on-quaternary: var(--grey-500);
+	--container-text-quaternary: var(--white);
+	--container-on-text-quaternary: var(--white);
+}
+
+[data-theme='dark'] {
+	/* background */
+	--background: var(--grey-900);
+	--on-background: var(--grey-800);
+	--background-secondary: var(--grey-900);
+	--background-gradient: linear-gradient(180deg, rgb(31 41 55 / 100%) 0%, rgb(17 24 39 / 100%) 100%);
+	--background-tertiary: var(--grey-950);
+
+	/* icon */
+	--icon-primary: var(--grey-600);
+	--icon-secondary: var(--grey-500);
+
+	/* border */
+	--border-primary: var(--grey-700);
+
+	/* text */
+	--text-primary: var(--grey-100);
+	--on-text-primary: var(--red);
+	--text-secondary: var(--grey-400);
+	--text-tertiary: var(--grey-500);
+
+	/* container */
+	--container-primary: var(--red);
+	--container-on-primary: var(--red-dark);
+	--container-text-primary: var(--grey-100);
+	--container-on-text-primary: var(--grey-100);
+	--container-secondary: var(--grey-100);
+	--container-on-secondary: var(--grey-400);
+	--container-text-secondary: var(--grey-800);
+	--container-on-text-secondary: var(--grey-800);
+	--container-tertiary: var(--grey-100);
+	--container-on-tertiary: var(--grey-400);
+	--container-text-tertiary: var(--grey-800);
+	--container-on-text-tertiary: var(--grey-800);
+	--container-quaternary: var(--red);
+	--container-on-quaternary: var(--red-dark);
+	--container-text-quaternary: var(--grey-100);
+	--container-on-text-quaternary: var(--grey-100);
+}

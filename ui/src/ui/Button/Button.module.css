@@ -1,0 +1,80 @@
+.button {
+	cursor: pointer;
+
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+
+	height: 44px;
+	padding: 10px;
+
+	border: none;
+	border-radius: 8px;
+
+	/* outline: none; */
+
+	transition: var(--transition);
+}
+
+.button:active {
+	box-shadow: inset 0 0 2px 0 black;
+}
+
+.button:disabled {
+	pointer-events: none;
+	opacity: 0.35;
+}
+
+.primary {
+	color: var(--container-text-primary);
+	background: var(--container-primary);
+}
+
+.primary svg {
+	fill: var(--container-text-primaryy);
+}
+
+.primary:hover {
+	background: var(--container-on-primary);
+}
+
+.primary:hover svg {
+	fill: var(--container-on-text-primaryy);
+}
+
+.secondary {
+	color: var(--container-text-secondary);
+	background: var(--container-secondary);
+}
+
+.secondary svg {
+	fill: var(--container-text-secondary);
+}
+
+.secondary:hover {
+	color: var(--container-on-text-secondary);
+	background: var(--container-on-secondary);
+}
+
+.secondary:hover svg {
+	fill: var(--container-on-text-secondary);
+}
+
+.tertiary {
+	color: var(--container-text-tertiary);
+	background: var(--container-tertiary);
+}
+
+.tertiary svg {
+	fill: var(--container-text-tertiary);
+}
+
+.tertiary:hover {
+	color: var(--container-on-text-tertiary);
+	background: var(--container-on-tertiary);
+}
+
+.tertiary:hover svg {
+	fill: var(--container-on-text-tertiary);
+}

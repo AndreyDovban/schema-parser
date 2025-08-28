@@ -1,0 +1,20 @@
+.textarea {
+	padding: 10px 12px;
+
+	font: var(--font-l1);
+	font-weight: 400;
+	color: var(--grey-100);
+
+	background: var(--grey-900);
+	border: none;
+	border-radius: var(--r-2);
+	outline: 1px solid var(--grey-700);
+}
+
+.textarea:focus {
+	outline: 1px solid var(--grey-500);
+}
+
+.textarea ::placeholder {
+	opacity: 0.5;
+}

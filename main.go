@@ -40,13 +40,14 @@ func main() {
 		return c.SendString("Привет, Fiber!")
 	})
 
-	app.Get("/schema", func(c *fiber.Ctx) error {
+	app.Get("/api/schema", func(c *fiber.Ctx) error {
 		schema, err := connect.GetSchema(conn, config.BaseDn)
 		if err != nil {
 			fmt.Println("Get Schema Error", err.Error())
 			conn.Close()
 		}
-		return c.JSON(schema)
+
+		return c.Status(fiber.StatusOK).JSON(schema)
 	})
 
 	app.Get("/test", func(c *fiber.Ctx) error {
