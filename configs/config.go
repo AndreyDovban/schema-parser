@@ -2,6 +2,7 @@ package configs
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -19,5 +20,11 @@ func LoadConfig() *Config {
 	if err != nil {
 		fmt.Println("Error loading .env file? using default config")
 	}
-	return &Config{}
+
+	return &Config{
+		Server:   os.Getenv("Server"),
+		Port:     os.Getenv("Port"),
+		Login:    os.Getenv("Login"),
+		Password: os.Getenv("Password"),
+		BaseDn:   os.Getenv("BaseDn")}
 }
