@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import cn from 'classnames';
 import styles from './Checkbox.module.css';
 

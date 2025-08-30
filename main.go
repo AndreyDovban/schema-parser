@@ -3,10 +3,10 @@ package main
 
 import (
 	"embed"
-	"fmt"
+	// "fmt"
 	"net/http"
-	"test/configs"
-	"test/connect"
+	// "test/configs"
+	// "test/connect"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
@@ -16,7 +16,7 @@ import (
 var public embed.FS
 
 func main() {
-	config := configs.LoadConfig()
+	// config := configs.LoadConfig()
 
 	// Создаем новый экземпляр Fiber
 	app := fiber.New()
@@ -27,31 +27,35 @@ func main() {
 		Browse:     true,
 	}))
 
-	conn, err := connect.LdapAuth(config.Server, config.Port, config.Login, config.Password)
-	if err != nil {
-		fmt.Println("Auth Error", err.Error())
-		conn.Close()
-	}
+	/*
+		conn, err := connect.LdapAuth(config.Server, config.Port, config.Login, config.Password)
+		if err != nil {
+			fmt.Println("Auth Error", err.Error())
+			conn.Close()
+		}
 
-	defer conn.Close()
+		defer conn.Close()
+	*/
 
 	// Определяем обработчик для корневого маршрута
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Привет, Fiber!")
 	})
 
-	app.Get("/api/schema", func(c *fiber.Ctx) error {
-		schema, err := connect.GetSchema(conn, config.BaseDn)
-		if err != nil {
-			fmt.Println("Get Schema Error", err.Error())
-			conn.Close()
-		}
+	/*
+		app.Get("/api/schema", func(c *fiber.Ctx) error {
+			schema, err := connect.GetSchema(conn, config.BaseDn)
+			if err != nil {
+				fmt.Println("Get Schema Error", err.Error())
+				conn.Close()
+			}
 
-		return c.Status(fiber.StatusOK).JSON(schema)
-	})
+			return c.Status(fiber.StatusOK).JSON(schema)
+		})
+	*/
 
-	app.Get("/test", func(c *fiber.Ctx) error {
-		return c.SendFile("./data.json")
+	app.Get("/api/test", func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).SendFile("./data.json")
 	})
 
 	// Запускаем сервер на порту 3000

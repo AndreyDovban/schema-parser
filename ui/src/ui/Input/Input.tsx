@@ -2,7 +2,7 @@ import styles from './Input.module.css';
 
 import cn from 'classnames';
 
-import { DetailedHTMLProps, ForwardedRef, InputHTMLAttributes, forwardRef } from 'react';
+import { type DetailedHTMLProps, type ForwardedRef, type InputHTMLAttributes, forwardRef } from 'react';
 
 interface InputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
 	className?: string;

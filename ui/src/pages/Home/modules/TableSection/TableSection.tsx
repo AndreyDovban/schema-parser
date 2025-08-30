@@ -13,14 +13,10 @@ import {
 	type ColumnFiltersState,
 	type Column,
 } from '@tanstack/react-table';
-import Close from '@/assets/svg/close.svg?react';
-import Sort from '@/assets/svg/sort.svg?react';
-import SortDown from '@/assets/svg/sort-down.svg?react';
-import SortUp from '@/assets/svg/sort-up.svg?react';
 import type { IClient, IAttribute } from '@/interfaces';
 
 const defaultData: IAttribute[] = [];
-const columnHelper = createColumnHelper<IAttribute[]>();
+const columnHelper = createColumnHelper<IAttribute>();
 
 const columns = [
 	columnHelper.accessor('DESC', {
@@ -40,6 +36,9 @@ const columns = [
 		cell: ({ getValue }) => (getValue() ? '✓' : '✗'),
 		// sortingFn: 'textCaseSensitive',
 		filterFn: 'includesString',
+		meta: {
+			filterVariant: 'select',
+		},
 	}),
 	columnHelper.accessor('USAGE', {
 		header: () => 'Использование',
@@ -49,8 +48,20 @@ const columns = [
 	}),
 ];
 
-function Filter({ column }: { column: Column<IAttribute[], unknown> }) {
+function Filter({ column }: { column: Column<IAttribute, unknown> }) {
 	const columnFilterValue = column.getFilterValue();
+	// const { filterVariant } = column.columnDef.meta ?? {};
+
+	// if (filterVariant == 'select') {
+	// 	return (
+	// 		<select onChange={e => column.setFilterValue(e.target.value)} value={columnFilterValue?.toString()}>
+	// 			{/* See faceted column filters example for dynamic select options */}
+	// 			<option value="">All</option>
+	// 			<option value="true">Single</option>
+	// 			<option value="false">Multi</option>
+	// 		</select>
+	// 	);
+	// }
 
 	return (
 		<DebouncedInput
@@ -92,7 +103,7 @@ function DebouncedInput({
 }
 
 export function TableSection() {
-	const { data, loading, error, info, request } = useRequest<IClient>('/api/schema'); // Хук запроса к серверу
+	const { data, loading, error, info, request } = useRequest<IClient>('/api/test'); // Хук запроса к серверу
 	const [columnOrder] = useState(['NAME', 'SINGLE_VALUE', 'USAGE', 'DESC']);
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -150,9 +161,8 @@ export function TableSection() {
 	}
 
 	// Функция сброса фильтрации
-	function clearFilter(e: MouseEvent, column: Column<IAttribute[], unknown>) {
+	function clearFilter(e: MouseEvent, column: Column<IAttribute, unknown>) {
 		e.stopPropagation();
-		// table.resetColumnFilters();
 		column.setFilterValue(undefined);
 	}
 
@@ -195,9 +205,9 @@ export function TableSection() {
 
 													<button className={styles.icon_button}>
 														{{
-															asc: <SortDown />,
-															desc: <SortUp />,
-														}[header.column.getIsSorted() as string] ?? <Sort />}
+															asc: '▲',
+															desc: '▼',
+														}[header.column.getIsSorted() as string] ?? <>f0dc;</>}
 													</button>
 
 													<span>
@@ -208,12 +218,12 @@ export function TableSection() {
 														) : null}
 													</span>
 
-													{header.column.getFilterValue() ? (
+													{header.column.getFilterValue() != undefined ? (
 														<button
 															onClick={e => clearFilter(e, header.column)}
 															className={styles.icon_button}
 														>
-															<Close />
+															!!!!
 														</button>
 													) : null}
 												</div>
@@ -238,7 +248,6 @@ export function TableSection() {
 												onClick={() => setFilterByCell(cell.column.id, v as string)}
 											>
 												{flexRender(cell.column.columnDef.cell, cell.getContext())}
-												{/* {cell.getValue() as string} */}
 											</td>
 										);
 									})}
@@ -251,91 +260,4 @@ export function TableSection() {
 			<button onClick={rerender}>Rerender</button>
 		</Section>
 	);
-
-	/*
-	return (
-		<Section className={styles.table_section} classNameContent={styles.content}>
-			<div className={styles.pagination}>Pagination</div>
-			<div className={styles.table_wrap}>
-				<table className={styles.table}>
-					<thead className={styles.thead}>
-						{table.getHeaderGroups().map(headerGroup => (
-							<tr key={headerGroup.id} className={styles.tr}>
-								{headerGroup.headers.map(header => {
-									return (
-										<th key={header.id} className={styles.th}>
-											{header.isPlaceholder ? null : (
-												<div
-													className={styles.thblock}
-													onClick={header.column.getToggleSortingHandler()}
-													title={
-														header.column.getCanSort()
-															? header.column.getNextSortingOrder() === 'asc'
-																? 'Sort ascending'
-																: header.column.getNextSortingOrder() === 'desc'
-																? 'Sort descending'
-																: 'Clear sort'
-															: undefined
-													}
-												>
-													<span>
-														{flexRender(
-															header.column.columnDef.header,
-															header.getContext(),
-														)}
-													</span>
-													<button className={styles.icon_button}>
-														{{
-															asc: <SortDown />,
-															desc: <SortUp />,
-														}[header.column.getIsSorted() as string] ?? <Sort />}
-													</button>
-
-													<span>
-														{header.column.getCanFilter() ? (
-															<span onClick={e => e.stopPropagation()}>
-																<Filter column={header.column} /> 
-															</span>
-														) : null}
-													</span>
-													{header.column.getFilterValue() ? (
-														<button
-															// onClick={e => clearFilter(e, header.column)}
-															className={styles.icon_button}
-														>
-															<Close />
-														</button>
-													) : null}
-												</div>
-											)}
-										</th>
-									);
-								})}
-							</tr>
-						))}
-					</thead>
-					<tbody>
-						{table.getRowModel().rows.map(row => (
-							<tr key={row.id} className={styles.tr}>
-								{row.getVisibleCells().map(cell => {
-									const v = cell.getValue();
-									return (
-										<td
-											key={cell.id}
-											className={styles.td}
-											onClick={() => setFilterByCell(cell.column.id, v as string)}
-										>
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
-										</td>
-									);
-								})}
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
-			<button onClick={() => rerender()}>Rerender</button>
-		</Section>
-	);
-	*/
 }
