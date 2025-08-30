@@ -22,9 +22,9 @@ func LoadConfig() *Config {
 	}
 
 	return &Config{
-		Server:   os.Getenv("Server"),
-		Port:     os.Getenv("Port"),
-		Login:    os.Getenv("Login"),
-		Password: os.Getenv("Password"),
-		BaseDn:   os.Getenv("BaseDn")}
+		Server:   os.Getenv("SERVER"),
+		Port:     os.Getenv("PORT"),
+		Login:    os.Getenv("LOGIN"),
+		Password: os.Getenv("PASSWORD"),
+		BaseDn:   os.Getenv("BASEDN")}
 }

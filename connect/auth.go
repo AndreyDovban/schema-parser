@@ -15,7 +15,8 @@ func LdapAuth(
 
 	tlsConfig := &tls.Config{InsecureSkipVerify: true}
 
-	fmt.Println(ldapServer + ":" + ldapPort)
+	fmt.Println("SERVER: ", ldapServer)
+	fmt.Println("POST: ", ldapPort)
 
 	conn, err := ldap.DialURL(ldapServer+":"+ldapPort, ldap.DialWithTLSConfig(tlsConfig))
 
