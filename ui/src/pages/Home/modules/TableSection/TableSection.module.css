@@ -66,16 +66,25 @@
 	align-items: center;
 	justify-content: center;
 
-	font-size: var(--font-l2);
-	color: var(--text-primary);
 	text-align: center;
 
 	background: none;
 	border: none;
 }
 
-.icon_button:hover {
-	color: var(--red);
+.icon_button svg {
+	pointer-events: none;
+
+	width: 20px;
+	height: 20px;
+
+	font: inherit;
+
+	fill: var(--text-primary);
+}
+
+.icon_button:hover svg {
+	fill: var(--red);
 }
 
 .td {

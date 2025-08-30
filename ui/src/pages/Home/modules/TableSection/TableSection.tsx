@@ -14,6 +14,10 @@ import {
 	type Column,
 } from '@tanstack/react-table';
 import type { IClient, IAttribute } from '@/interfaces';
+import Close from '@/assets/svg/close.svg?react';
+import Sort from '@/assets/svg/sort.svg?react';
+import SortDown from '@/assets/svg/sort-down.svg?react';
+import SortUp from '@/assets/svg/sort-up.svg?react';
 
 const defaultData: IAttribute[] = [];
 const columnHelper = createColumnHelper<IAttribute>();
@@ -48,20 +52,19 @@ const columns = [
 	}),
 ];
 
-function Filter({ column }: { column: Column<IAttribute, unknown> }) {
+function Filter({ column }: { column: Column<IAttribute, unknown> }, filterVariant: string = '') {
 	const columnFilterValue = column.getFilterValue();
-	// const { filterVariant } = column.columnDef.meta ?? {};
 
-	// if (filterVariant == 'select') {
-	// 	return (
-	// 		<select onChange={e => column.setFilterValue(e.target.value)} value={columnFilterValue?.toString()}>
-	// 			{/* See faceted column filters example for dynamic select options */}
-	// 			<option value="">All</option>
-	// 			<option value="true">Single</option>
-	// 			<option value="false">Multi</option>
-	// 		</select>
-	// 	);
-	// }
+	if (filterVariant == 'select') {
+		return (
+			<select onChange={e => column.setFilterValue(e.target.value)} value={columnFilterValue?.toString()}>
+				{/* See faceted column filters example for dynamic select options */}
+				<option value="">All</option>
+				<option value="true">Single</option>
+				<option value="false">Multi</option>
+			</select>
+		);
+	}
 
 	return (
 		<DebouncedInput
@@ -205,9 +208,9 @@ export function TableSection() {
 
 													<button className={styles.icon_button}>
 														{{
-															asc: '▲',
-															desc: '▼',
-														}[header.column.getIsSorted() as string] ?? <>f0dc;</>}
+															asc: <SortDown />,
+															desc: <SortUp />,
+														}[header.column.getIsSorted() as string] ?? <Sort />}
 													</button>
 
 													<span>
@@ -223,7 +226,7 @@ export function TableSection() {
 															onClick={e => clearFilter(e, header.column)}
 															className={styles.icon_button}
 														>
-															!!!!
+															<Close />
 														</button>
 													) : null}
 												</div>
