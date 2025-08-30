@@ -41,7 +41,7 @@
 
 	position: relative;
 
-	box-sizing: border-box;
+	width: fit-content;
 	padding-inline: 10px;
 
 	font-weight: 500;
@@ -92,8 +92,7 @@
 
 	overflow: hidden;
 
-	min-width: 200px;
-	max-width: 200px;
+	max-width: 300px;
 	padding-inline: 10px;
 
 	text-overflow: ellipsis;

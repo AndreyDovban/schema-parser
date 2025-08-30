@@ -5,6 +5,7 @@ import { type InputHTMLAttributes, type MouseEvent, useEffect, useState } from '
 import {
 	createColumnHelper,
 	flexRender,
+	type RowData,
 	getCoreRowModel,
 	getSortedRowModel,
 	type SortingState,
@@ -19,16 +20,18 @@ import Sort from '@/assets/svg/sort.svg?react';
 import SortDown from '@/assets/svg/sort-down.svg?react';
 import SortUp from '@/assets/svg/sort-up.svg?react';
 
+declare module '@tanstack/react-table' {
+	//allows us to define custom properties for our columns
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	interface ColumnMeta<TData extends RowData, TValue> {
+		filterVariant?: 'text' | 'range' | 'select';
+	}
+}
+
 const defaultData: IAttribute[] = [];
 const columnHelper = createColumnHelper<IAttribute>();
 
 const columns = [
-	columnHelper.accessor('DESC', {
-		header: () => 'Описание',
-		cell: info => info.getValue(),
-		sortingFn: 'textCaseSensitive',
-		filterFn: 'includesString',
-	}),
 	columnHelper.accessor('NAME', {
 		id: 'NAME',
 		header: () => 'Название',
@@ -36,7 +39,7 @@ const columns = [
 		filterFn: 'includesString',
 	}),
 	columnHelper.accessor('SINGLE_VALUE', {
-		header: () => 'Singl Value',
+		header: () => 'Однозначный',
 		cell: ({ getValue }) => (getValue() ? '✓' : '✗'),
 		// sortingFn: 'textCaseSensitive',
 		filterFn: 'includesString',
@@ -50,18 +53,25 @@ const columns = [
 		sortingFn: 'textCaseSensitive',
 		filterFn: 'includesString',
 	}),
+	columnHelper.accessor('DESC', {
+		header: () => 'Описание',
+		cell: info => info.getValue(),
+		sortingFn: 'textCaseSensitive',
+		filterFn: 'includesString',
+	}),
 ];
 
-function Filter({ column }: { column: Column<IAttribute, unknown> }, filterVariant: string = '') {
+function Filter({ column }: { column: Column<IAttribute, unknown> }) {
 	const columnFilterValue = column.getFilterValue();
+	const { filterVariant } = column.columnDef.meta ?? {};
 
 	if (filterVariant == 'select') {
 		return (
 			<select onChange={e => column.setFilterValue(e.target.value)} value={columnFilterValue?.toString()}>
 				{/* See faceted column filters example for dynamic select options */}
-				<option value="">All</option>
-				<option value="true">Single</option>
-				<option value="false">Multi</option>
+				<option value=""></option>
+				<option value="true">✓</option>
+				<option value="false">✗</option>
 			</select>
 		);
 	}
@@ -245,7 +255,7 @@ export function TableSection() {
 										const v = cell.getValue();
 										return (
 											<td
-												title={v as string}
+												title={typeof v != 'boolean' ? (v as string) : ''}
 												key={cell.id}
 												className={styles.td}
 												onClick={() => setFilterByCell(cell.column.id, v as string)}
