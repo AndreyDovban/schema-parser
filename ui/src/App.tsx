@@ -1,7 +1,7 @@
-import Home from '@/pages/Home/Home';
+import Attributes from '@/pages/Attributes/Attributes';
 
 function App() {
-	return <Home />;
+	return <Attributes />;
 }
 
 export default App;

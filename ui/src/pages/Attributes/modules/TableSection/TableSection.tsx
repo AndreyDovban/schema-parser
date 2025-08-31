@@ -186,7 +186,6 @@ export function TableSection() {
 
 	return (
 		<Section className={styles.table_section} classNameContent={styles.content}>
-			<div className={styles.pagination}>Pagination</div>
 			<div className={styles.table_wrap}>
 				<table className={styles.table}>
 					<thead className={styles.thead}>

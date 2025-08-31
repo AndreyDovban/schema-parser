@@ -25,6 +25,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+	gap: var(--s-6);
 	align-items: center;
 
 	width: 100%;

@@ -5,7 +5,6 @@ import (
 	"embed"
 	"fmt"
 	"log"
-	"schema-parser/helpers"
 
 	// "fmt"
 	"net/http"
@@ -31,7 +30,7 @@ func main() {
 		Browse:     true,
 	}))
 
-	go helpers.OpenBrowser("http://localhost:5000")
+	// go helpers.OpenBrowser("http://localhost:5000")
 
 	// conn, err := connect.LdapAuth(config.Server, config.Port, config.Login, config.Password)
 	// if err != nil {
@@ -75,10 +74,10 @@ func main() {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	app.Get("/api/close", func(c *fiber.Ctx) error {
-		log.Fatal("CLOSED")
-		return c.SendStatus(fiber.StatusOK)
-	})
+	// app.Get("/api/close", func(c *fiber.Ctx) error {
+	// 	log.Fatal("CLOSED")
+	// 	return c.SendStatus(fiber.StatusOK)
+	// })
 
 	// Запускаем сервер на порту 5000
 	log.Fatal(app.Listen(":5000"))
