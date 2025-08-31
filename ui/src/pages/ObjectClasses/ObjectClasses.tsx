@@ -1,7 +1,7 @@
 import Layout from '@/layout';
 import { TableSection } from './modules';
 
-export default function ObjectClasses() {
+export function ObjectClasses() {
 	return (
 		<Layout>
 			<TableSection />

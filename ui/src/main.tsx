@@ -1,6 +1,24 @@
 import './styles/index.css';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
+import { Attributes, ObjectClasses, Builder } from '@/pages';
 
-import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+const router = createBrowserRouter([
+	{
+		path: '/attributes',
+		element: <Attributes />,
+	},
+	{
+		path: '/objectclasses',
+		element: <ObjectClasses />,
+	},
+	{
+		path: '/builder',
+		element: <Builder />,
+	},
+]);
 
-createRoot(document.getElementById('root')!).render(<App />);
+const root = document.getElementById('root');
+
+ReactDOM.createRoot(root as HTMLElement).render(<RouterProvider router={router} />);

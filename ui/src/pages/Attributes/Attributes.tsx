@@ -2,7 +2,7 @@
 import { TableSection } from './modules';
 import Layout from '@/layout';
 
-export default function Attributes() {
+export function Attributes() {
 	// useEffect(() => {
 	// 	sessionStorage.setItem('isReloading', 'true');
 
