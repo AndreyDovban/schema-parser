@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"test/store"
+	"schema-parser/store"
 
 	ldap "github.com/go-ldap/ldap/v3"
 )

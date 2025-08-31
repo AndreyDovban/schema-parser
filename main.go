@@ -3,11 +3,14 @@ package main
 
 import (
 	"embed"
+	"fmt"
+	"log"
+	"schema-parser/helpers"
 
 	// "fmt"
 	"net/http"
-	// "test/configs"
-	// "test/connect"
+	// "schema-parser/configs"
+	// "schema-parser/connect"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
@@ -27,6 +30,8 @@ func main() {
 		PathPrefix: "dist",
 		Browse:     true,
 	}))
+
+	go helpers.OpenBrowser("http://localhost:5000")
 
 	// conn, err := connect.LdapAuth(config.Server, config.Port, config.Login, config.Password)
 	// if err != nil {
@@ -65,6 +70,16 @@ func main() {
 		return c.Status(fiber.StatusOK).SendFile("./data.json")
 	})
 
+	app.Get("/api/work", func(c *fiber.Ctx) error {
+		fmt.Println("WORK")
+		return c.SendStatus(fiber.StatusOK)
+	})
+
+	app.Get("/api/close", func(c *fiber.Ctx) error {
+		log.Fatal("CLOSED")
+		return c.SendStatus(fiber.StatusOK)
+	})
+
 	// Запускаем сервер на порту 5000
-	app.Listen(":5000")
+	log.Fatal(app.Listen(":5000"))
 }
