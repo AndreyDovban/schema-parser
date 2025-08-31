@@ -32,7 +32,7 @@ func GetSchema(conn *ldap.Conn, baseDN string) (*Schema, error) {
 
 	sr, err := conn.Search(searchRequest)
 	if err != nil {
-		fmt.Println("1111")
+		fmt.Println("CONN SEARCH ", err.Error())
 		return nil, err
 	}
 
@@ -90,11 +90,13 @@ func GetSchema(conn *ldap.Conn, baseDN string) (*Schema, error) {
 
 	b, err := json.MarshalIndent(schema, "", "  ")
 	if err != nil {
+		fmt.Println("MARSHAL INDENT ", err.Error())
 		return nil, err
 	}
 
 	file, err := os.Create("data.json")
 	if err != nil {
+		fmt.Println("CREATE FILE ", err.Error())
 		return nil, err
 	}
 

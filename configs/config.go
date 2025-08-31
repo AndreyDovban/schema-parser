@@ -12,7 +12,6 @@ type Config struct {
 	Port     string
 	Login    string
 	Password string
-	BaseDn   string
 }
 
 func LoadConfig() *Config {
@@ -26,5 +25,5 @@ func LoadConfig() *Config {
 		Port:     os.Getenv("PORT"),
 		Login:    os.Getenv("LOGIN"),
 		Password: os.Getenv("PASSWORD"),
-		BaseDn:   os.Getenv("BASEDN")}
+	}
 }

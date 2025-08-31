@@ -21,7 +21,8 @@ func LdapAuth(
 	conn, err := ldap.DialURL(ldapServer+":"+ldapPort, ldap.DialWithTLSConfig(tlsConfig))
 
 	if err != nil {
-		log.Fatal("! 1 ", err)
+		fmt.Println("LDAP DIAL URL ", err.Error())
+		log.Fatal(err)
 	}
 
 	controls := []ldap.Control{}
@@ -34,6 +35,7 @@ func LdapAuth(
 	if err != nil {
 		_, err = conn.SimpleBind(bindRequestSamba)
 		if err != nil {
+			fmt.Println("CONN BIND ", err.Error())
 			return conn, err
 		} else {
 			fmt.Println("Login Ok")
