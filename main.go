@@ -5,12 +5,14 @@ import (
 	"embed"
 	"fmt"
 	"log"
+	"schema-parser/connect"
+	"schema-parser/store"
 
 	// "fmt"
 	"net/http"
 	// "schema-parser/configs"
-	// "schema-parser/connect"
 
+	"github.com/go-ldap/ldap/v3"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 )
@@ -18,8 +20,19 @@ import (
 //go:embed dist/*
 var dist embed.FS
 
+type IAuth struct {
+	Address  string `json:"address"`
+	Port     string `json:"port"`
+	Login    string `json:"login"`
+	Password string `json:"password"`
+}
+
 func main() {
 	// config := configs.LoadConfig()
+
+	var conn *ldap.Conn
+	var err error
+	defer conn.Close()
 
 	// Создаем новый экземпляр Fiber
 	app := fiber.New()
@@ -32,46 +45,46 @@ func main() {
 
 	// go helpers.OpenBrowser("http://localhost:5000")
 
-	// conn, err := connect.LdapAuth(config.Server, config.Port, config.Login, config.Password)
-	// if err != nil {
-	// 	fmt.Println("Auth Error", err.Error())
-	// 	conn.Close()
-	// }
-
-	// defer conn.Close()
-
 	// Определяем обработчик для корневого маршрута
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Привет, Fiber!")
 	})
 
-	// app.Get("/api/schema", func(c *fiber.Ctx) error {
-	// 	schema, err := connect.GetSchema(conn, store.BaseDn)
-	// 	if err != nil {
-	// 		fmt.Println("Get Schema Error", err.Error())
-	// 		conn.Close()
-	// 	}
+	app.Post("/api/auth", func(c *fiber.Ctx) error {
+		var user IAuth
+		c.BodyParser(&user)
+		fmt.Println(user)
 
-	// 	return c.Status(fiber.StatusOK).JSON(schema)
-	// })
+		conn, err = connect.LdapAuth(user.Address, user.Port, user.Login, user.Password)
+		if err != nil {
+			fmt.Println("Auth Error", err.Error())
+			return c.Status(401).SendString("Ошибка авторизаци!")
+		}
+		return c.Status(200).JSON(user)
+	})
 
-	// app.Get("/api/subschema", func(c *fiber.Ctx) error {
-	// 	schema, err := connect.GetSubSchemaDn(conn, "")
-	// 	if err != nil {
-	// 		fmt.Println("Get SubSchema Dn Error", err.Error())
-	// 		conn.Close()
-	// 	}
+	app.Get("/api/schema", func(c *fiber.Ctx) error {
+		schema, err := connect.GetSchema(conn, store.BaseDn)
+		if err != nil {
+			fmt.Println("Get Schema Error", err.Error())
+			conn.Close()
+		}
 
-	// 	return c.Status(fiber.StatusOK).JSON(schema)
-	// })
+		return c.Status(fiber.StatusOK).JSON(schema)
+	})
+
+	app.Get("/api/subschema", func(c *fiber.Ctx) error {
+		schema, err := connect.GetSubSchemaDn(conn, "")
+		if err != nil {
+			fmt.Println("Get SubSchema Dn Error", err.Error())
+			conn.Close()
+		}
+
+		return c.Status(fiber.StatusOK).JSON(schema)
+	})
 
 	app.Get("/api/test", func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusOK).SendFile("./data.json")
-	})
-
-	app.Get("/api/work", func(c *fiber.Ctx) error {
-		fmt.Println("WORK")
-		return c.SendStatus(fiber.StatusOK)
 	})
 
 	// app.Get("/api/close", func(c *fiber.Ctx) error {
@@ -82,3 +95,12 @@ func main() {
 	// Запускаем сервер на порту 5000
 	log.Fatal(app.Listen(":5000"))
 }
+
+/*
+{
+    "address": "ldaps://dc01.granulex.test",
+    "port": "636",
+    "login": "uid=admin,cn=users,cn=accounts,dc=granulex,dc=test",
+    "password": "12345678"
+}
+*/

@@ -1,11 +1,59 @@
 .header {
 	display: flex;
-	flex-wrap: wrap;
 	gap: var(--s-4);
-	align-items: center;
+	justify-content: space-between;
 
 	padding: var(--s-4);
 
 	background: var(--background-secondary);
 	border: 1px solid var(--border-secondary);
+}
+
+.inputs_block {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--s-4);
+	align-items: flex-end;
+}
+
+.address {
+	width: 300px;
+}
+
+.port {
+	width: 100px;
+}
+
+.login {
+	width: 400px;
+}
+
+.buttons_block {
+	display: flex;
+	gap: var(--s-4);
+}
+
+.button_icon {
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: none;
+	border: none;
+}
+
+.button_icon svg {
+	width: 24px;
+	height: 24px;
+	fill: var(--icon-primary);
+}
+
+.button_icon:hover svg {
+	fill: var(--red);
+}
+
+.is_authorized svg {
+	fill: green;
 }

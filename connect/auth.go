@@ -3,7 +3,6 @@ package connect
 import (
 	"crypto/tls"
 	"fmt"
-	"log"
 
 	ldap "github.com/go-ldap/ldap/v3"
 )
@@ -22,7 +21,7 @@ func LdapAuth(
 
 	if err != nil {
 		fmt.Println("LDAP DIAL URL ", err.Error())
-		log.Fatal(err)
+		return nil, err
 	}
 
 	controls := []ldap.Control{}
