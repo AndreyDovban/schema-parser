@@ -1,0 +1,10 @@
+.nav {
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-4);
+
+	padding: var(--s-4);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}

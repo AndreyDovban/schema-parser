@@ -3,18 +3,6 @@
 	background: var(--background-gradient);
 }
 
-.content {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	padding-block: var(--s-6);
-}
-
-.pagination {
-	padding: var(--s-4);
-	border: 1px solid var(--border-primary);
-}
-
 .table_wrap {
 	overflow: auto;
 	flex-grow: 1;

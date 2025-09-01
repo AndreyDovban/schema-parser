@@ -1,14 +1,8 @@
 .section {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+	gap: var(--s-4);
 
-	width: 100%;
-}
-
-.wrap {
 	width: 100%;
 	max-width: var(--max-width);
-	padding-inline: var(--adaptive-3);
 }

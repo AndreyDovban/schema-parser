@@ -2,10 +2,3 @@
 	height: 100%;
 	background: var(--background-gradient);
 }
-
-.content {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	padding-block: var(--s-6);
-}

@@ -27,7 +27,7 @@
 	--insight-logo-gradient: linear-gradient(130deg, #35c759 60%, #21b345 100%);
 
 	/* background */
-	--background: var(--grey-900);
+	--background: var(--grey-800);
 	--on-background: var(--grey-800);
 	--background-secondary: var(--grey-900);
 	--background-gradient: linear-gradient(180deg, rgb(31 41 55 / 100%) 0%, rgb(17 24 39 / 100%) 100%);
@@ -39,6 +39,7 @@
 
 	/* border */
 	--border-primary: var(--grey-700);
+	--border-secondary: var(--grey-500);
 
 	/* text */
 	--text-primary: var(--grey-100);

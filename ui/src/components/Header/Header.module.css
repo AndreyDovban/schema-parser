@@ -1,0 +1,11 @@
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--s-4);
+	align-items: center;
+
+	padding: var(--s-4);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}

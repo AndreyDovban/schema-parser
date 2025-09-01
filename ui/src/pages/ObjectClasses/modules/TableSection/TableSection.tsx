@@ -154,23 +154,12 @@ export function TableSection() {
 	// Вывод лоадера при ожидании ответа
 	if (loading) {
 		console.log('Загрузка');
-		<Section className={styles.table_section} classNameContent={styles.content}>
-			LOADING...
-		</Section>;
+		<Section className={styles.table_section}>LOADING...</Section>;
 	}
 
 	// Вывод инфорамции об ошибке
 	if (error) {
-		return (
-			<Section className={styles.table_section} classNameContent={styles.content}>
-				Ошибка: {error.message}
-			</Section>
-		);
-	}
-
-	// Функция перерисовки таблицы
-	function rerender() {
-		request();
+		return <Section className={styles.table_section}>Ошибка: {error.message}</Section>;
 	}
 
 	// Функция сброса фильтрации
@@ -185,7 +174,7 @@ export function TableSection() {
 	}
 
 	return (
-		<Section className={styles.table_section} classNameContent={styles.content}>
+		<Section className={styles.table_section}>
 			<div className={styles.table_wrap}>
 				<table className={styles.table}>
 					<thead className={styles.thead}>
@@ -269,7 +258,6 @@ export function TableSection() {
 					</tbody>
 				</table>
 			</div>
-			<button onClick={rerender}>Rerender</button>
 		</Section>
 	);
 }

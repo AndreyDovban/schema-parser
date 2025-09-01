@@ -1,5 +1,5 @@
 import type { HTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
-import { Link } from 'react-router';
+import { Header, Nav } from './components';
 
 interface LayoutProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	children?: ReactNode;
@@ -8,13 +8,8 @@ interface LayoutProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTM
 const Layout = ({ children }: LayoutProps) => {
 	return (
 		<>
-			<header>
-				<nav>
-					<Link to="/attributes">Атрибуты</Link>
-					<Link to="/objectclasses">Объект классы</Link>
-					<Link to="/builder">Сборка объекта</Link>
-				</nav>
-			</header>
+			<Header />
+			<Nav />
 			<main>{children}</main>
 		</>
 	);
