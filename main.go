@@ -64,6 +64,11 @@ func main() {
 	})
 
 	app.Get("/api/schema", func(c *fiber.Ctx) error {
+		_, err := connect.GetSubSchemaDn(conn, "")
+		if err != nil {
+			fmt.Println("Get SubSchema Dn Error", err.Error())
+			conn.Close()
+		}
 		schema, err := connect.GetSchema(conn, store.BaseDn)
 		if err != nil {
 			fmt.Println("Get Schema Error", err.Error())
@@ -95,12 +100,3 @@ func main() {
 	// Запускаем сервер на порту 5000
 	log.Fatal(app.Listen(":5000"))
 }
-
-/*
-{
-    "address": "ldaps://dc01.granulex.test",
-    "port": "636",
-    "login": "uid=admin,cn=users,cn=accounts,dc=granulex,dc=test",
-    "password": "12345678"
-}
-*/

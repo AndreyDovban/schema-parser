@@ -1,36 +1,29 @@
 import styles from './Header.module.css';
 import cn from 'classnames';
-import { useEffect, useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
+import { useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import Link from '@/assets/svg/link.svg?react';
 import Refresh from '@/assets/svg/refresh.svg?react';
 // import { useRecoilState } from 'recoil';
 // import { authDataState } from '@/store/authDataState';
-import { useIsAithorizedStore, useSchemaStore } from '@/store';
-import type { ISchema } from '@/interfaces';
-import { useRequest } from '@/hooks/useRequest';
+import { useIsAithorizedStore } from '@/store';
 
 interface HeaderProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	className?: string;
 }
 
 export function Header({ className, ...props }: HeaderProps) {
-	const { isAuthorized, setIsAuthorized } = useIsAithorizedStore();
-	const { data, error, request } = useRequest<ISchema>('/api/schema'); // Хук запроса к серверу
-	const { setSchema } = useSchemaStore();
-
 	const [authData, setAuthData] = useState({
 		address: 'ldaps://dc01.granulex.test',
 		port: '636',
 		login: 'uid=admin,cn=users,cn=accounts,dc=granulex,dc=test',
 		password: '12345678',
 	});
+	const { isAuthorized, setIsAuthorized } = useIsAithorizedStore();
 
 	function handleCahangeAuthData(e: ChangeEvent<HTMLInputElement>) {
 		setAuthData({ ...authData, [e.target.placeholder]: e.target.value });
-		setIsAuthorized(false);
 	}
 
-	// Функция отправки данных авторизации
 	async function handleSubmit() {
 		try {
 			const response = await fetch('/api/auth', {
@@ -56,19 +49,6 @@ export function Header({ className, ...props }: HeaderProps) {
 			console.log('finally');
 		}
 	}
-
-	// Функция обновления данных
-	function handleRefresh() {
-		if (isAuthorized) {
-			request();
-		}
-	}
-
-	useEffect(() => {
-		if (data && data.attributes) {
-			setSchema(data);
-		}
-	}, [data, setSchema, error]);
 
 	return (
 		<header className={cn(className, styles.header)} {...props}>
@@ -113,13 +93,7 @@ export function Header({ className, ...props }: HeaderProps) {
 				>
 					<Link />
 				</button>
-				<button
-					title="Обновить данные"
-					className={cn(styles.button_icon, {
-						['off']: !isAuthorized,
-					})}
-					onClick={handleRefresh}
-				>
+				<button title="Обновить данные" className={styles.button_icon}>
 					<Refresh />
 				</button>
 			</div>

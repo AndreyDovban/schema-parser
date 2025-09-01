@@ -2,10 +2,14 @@ import './styles/index.css';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
-import { Attributes, ObjectClasses, Builder } from '@/pages';
+import { Attributes, ObjectClasses, Builder, Home } from '@/pages';
 // import { RecoilRoot } from 'recoil';
 
 const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Home />,
+	},
 	{
 		path: '/attributes',
 		element: <Attributes />,
@@ -23,9 +27,3 @@ const router = createBrowserRouter([
 const root = document.getElementById('root');
 
 ReactDOM.createRoot(root as HTMLElement).render(<RouterProvider router={router} />);
-
-// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-// 	<RecoilRoot>
-// 		<RouterProvider router={router} />
-// 	</RecoilRoot>,
-// );

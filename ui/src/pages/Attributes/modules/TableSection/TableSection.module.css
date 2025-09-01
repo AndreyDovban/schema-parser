@@ -3,6 +3,16 @@
 	background: var(--background-gradient);
 }
 
+.error_message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+
+	text-wrap: balance;
+}
+
 .table_wrap {
 	overflow: auto;
 	flex-grow: 1;

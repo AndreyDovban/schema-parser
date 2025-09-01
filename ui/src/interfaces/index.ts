@@ -5,6 +5,6 @@ export interface IAttribute {
 	USAGE: string;
 }
 
-export interface IClient {
+export interface ISchema {
 	attributes: IAttribute[];
 }

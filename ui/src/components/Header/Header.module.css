@@ -57,3 +57,7 @@
 .is_authorized svg {
 	fill: green;
 }
+
+.button_icon.disabled {
+	pointer-events: none;
+}
