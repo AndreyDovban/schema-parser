@@ -1,10 +1,10 @@
 import Layout from '@/layout';
-import { TableSection } from './modules';
+import { BuilderSection } from './modules';
 
 export function Builder() {
 	return (
 		<Layout>
-			<TableSection />
+			<BuilderSection />
 		</Layout>
 	);
 }

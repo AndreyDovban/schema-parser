@@ -1,1 +1,1 @@
-export * from './TableSection/TableSection';
+export * from './BuilderSection/BuilderSection';
