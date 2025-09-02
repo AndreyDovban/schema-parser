@@ -1,4 +1,4 @@
-import styles from './TableSection.module.css';
+import styles from './ObjectClassTableSection.module.css';
 import { Section } from '@/ui';
 import { type InputHTMLAttributes, type MouseEvent, useEffect, useState } from 'react';
 import {
@@ -13,7 +13,7 @@ import {
 	type ColumnFiltersState,
 	type Column,
 } from '@tanstack/react-table';
-import type { IAttribute } from '@/interfaces';
+import type { IObjectClass } from '@/interfaces';
 import Close from '@/assets/svg/close.svg?react';
 import Sort from '@/assets/svg/sort.svg?react';
 import SortDown from '@/assets/svg/sort-down.svg?react';
@@ -28,8 +28,8 @@ declare module '@tanstack/react-table' {
 	}
 }
 
-const defaultData: IAttribute[] = [];
-const columnHelper = createColumnHelper<IAttribute>();
+const defaultData: IObjectClass[] = [];
+const columnHelper = createColumnHelper<IObjectClass>();
 
 const columns = [
 	columnHelper.accessor('NAME', {
@@ -38,20 +38,42 @@ const columns = [
 		cell: info => info.getValue(),
 		filterFn: 'includesString',
 	}),
-	columnHelper.accessor('SINGLE_VALUE', {
-		header: () => 'Однозначный',
+	columnHelper.accessor('MUST', {
+		id: 'MUST',
+		header: () => 'Обязательные атрибуты',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('MAY', {
+		id: 'MAY',
+		header: () => 'Необязательные атрибуты',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('SUP', {
+		header: () => 'Супер объект класс',
+		cell: info => info.renderValue(),
+		sortingFn: 'textCaseSensitive',
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('STRUCTURAL', {
+		header: () => 'Структурный',
 		cell: ({ getValue }) => (getValue() ? '✓' : '✗'),
 		// sortingFn: 'textCaseSensitive',
 		filterFn: 'includesString',
 		meta: {
 			filterVariant: 'select',
 		},
-	}),
-	columnHelper.accessor('USAGE', {
-		header: () => 'Использование',
-		cell: info => info.renderValue(),
-		sortingFn: 'textCaseSensitive',
-		filterFn: 'includesString',
 	}),
 	columnHelper.accessor('DESC', {
 		header: () => 'Описание',
@@ -61,7 +83,7 @@ const columns = [
 	}),
 ];
 
-function Filter({ column }: { column: Column<IAttribute, unknown> }) {
+function Filter({ column }: { column: Column<IObjectClass, unknown> }) {
 	const columnFilterValue = column.getFilterValue();
 	const { filterVariant } = column.columnDef.meta ?? {};
 
@@ -115,8 +137,7 @@ function DebouncedInput({
 	return <input {...props} value={value} onChange={e => setValue(e.target.value)} />;
 }
 
-export function TableSection() {
-	// const { data, loading, error, info, request } = useRequest<ISchema>('/api/test'); // Хук запроса к серверу
+export function ObjectClassTableSection() {
 	const { schema } = useSchemaStore();
 	const [columnOrder] = useState(['NAME', 'SINGLE_VALUE', 'USAGE', 'DESC']);
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
@@ -124,7 +145,7 @@ export function TableSection() {
 
 	// Объект таблица
 	const table = useReactTable({
-		data: schema ? schema.attributes : defaultData,
+		data: schema ? schema.objectclasses : defaultData,
 		columns,
 		filterFns: {},
 		state: {
@@ -139,26 +160,8 @@ export function TableSection() {
 		onColumnFiltersChange: setColumnFilters,
 	});
 
-	// В эффекте выводится инвормаци ответа сервере
-	// useEffect(() => {
-	// 	if (info) {
-	// 		console.log('INFO', info);
-	// 	}
-	// }, [info]);
-
-	// Вывод лоадера при ожидании ответа
-	// if (loading) {
-	// 	console.log('Загрузка');
-	// 	<Section className={styles.table_section}>LOADING...</Section>;
-	// }
-
-	// Вывод инфорамции об ошибке
-	// if (error) {
-	// 	return <Section className={styles.table_section}>Ошибка: {error.message}</Section>;
-	// }
-
 	// Функция сброса фильтрации
-	function clearFilter(e: MouseEvent, column: Column<IAttribute, unknown>) {
+	function clearFilter(e: MouseEvent, column: Column<IObjectClass, unknown>) {
 		e.stopPropagation();
 		column.setFilterValue(undefined);
 	}

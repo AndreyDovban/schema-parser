@@ -1,5 +1,4 @@
-import { useRequest } from '@/hooks/useRequest';
-import styles from './TableSection.module.css';
+import styles from './AttributeTableSection.module.css';
 import { Section } from '@/ui';
 import { type InputHTMLAttributes, type MouseEvent, useEffect, useState } from 'react';
 import {
@@ -14,11 +13,12 @@ import {
 	type ColumnFiltersState,
 	type Column,
 } from '@tanstack/react-table';
-import type { IClient, IAttribute } from '@/interfaces';
+import type { IAttribute } from '@/interfaces';
 import Close from '@/assets/svg/close.svg?react';
 import Sort from '@/assets/svg/sort.svg?react';
 import SortDown from '@/assets/svg/sort-down.svg?react';
 import SortUp from '@/assets/svg/sort-up.svg?react';
+import { useSchemaStore } from '@/store/useSchemaStore';
 
 declare module '@tanstack/react-table' {
 	//allows us to define custom properties for our columns
@@ -35,7 +35,12 @@ const columns = [
 	columnHelper.accessor('NAME', {
 		id: 'NAME',
 		header: () => 'Название',
-		cell: info => info.getValue(),
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
 		filterFn: 'includesString',
 	}),
 	columnHelper.accessor('SINGLE_VALUE', {
@@ -52,6 +57,21 @@ const columns = [
 		cell: info => info.renderValue(),
 		sortingFn: 'textCaseSensitive',
 		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('SUP', {
+		header: () => 'Суператрибут',
+		cell: info => info.renderValue(),
+		sortingFn: 'textCaseSensitive',
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('USER_MODIFICATION', {
+		header: () => 'Изменяемость',
+		cell: ({ getValue }) => (getValue() ? '✓' : '✗'),
+		// sortingFn: 'textCaseSensitive',
+		filterFn: 'includesString',
+		meta: {
+			filterVariant: 'select',
+		},
 	}),
 	columnHelper.accessor('DESC', {
 		header: () => 'Описание',
@@ -115,15 +135,15 @@ function DebouncedInput({
 	return <input {...props} value={value} onChange={e => setValue(e.target.value)} />;
 }
 
-export function TableSection() {
-	const { data, loading, error, info, request } = useRequest<IClient>('/api/test'); // Хук запроса к серверу
+export function AttributeTableSection() {
+	const { schema } = useSchemaStore();
 	const [columnOrder] = useState(['NAME', 'SINGLE_VALUE', 'USAGE', 'DESC']);
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
 	// Объект таблица
 	const table = useReactTable({
-		data: data ? data.attributes : defaultData,
+		data: schema ? schema.attributes : defaultData,
 		columns,
 		filterFns: {},
 		state: {
@@ -138,30 +158,6 @@ export function TableSection() {
 		onColumnFiltersChange: setColumnFilters,
 	});
 
-	// В эффекте идёт запрос за списко клиентов
-	useEffect(() => {
-		request();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	// В эффекте выводится инвормаци ответа сервере
-	useEffect(() => {
-		if (info) {
-			console.log('INFO', info);
-		}
-	}, [info]);
-
-	// Вывод лоадера при ожидании ответа
-	if (loading) {
-		console.log('Загрузка');
-		<Section className={styles.table_section}>LOADING...</Section>;
-	}
-
-	// Вывод инфорамции об ошибке
-	if (error) {
-		return <Section className={styles.table_section}>Ошибка: {error.message}</Section>;
-	}
-
 	// Функция сброса фильтрации
 	function clearFilter(e: MouseEvent, column: Column<IAttribute, unknown>) {
 		e.stopPropagation();
@@ -171,6 +167,10 @@ export function TableSection() {
 	// Функция установки фильтра по клику на ячейку
 	function setFilterByCell(column_id: string, value: string) {
 		table.getColumn(column_id)?.setFilterValue(value);
+	}
+
+	if (!schema.attributes.length) {
+		return <Section className={styles.error_message}>Данные схемы не получены</Section>;
 	}
 
 	return (

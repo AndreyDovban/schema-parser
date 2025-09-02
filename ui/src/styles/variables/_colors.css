@@ -28,7 +28,7 @@
 
 	/* background */
 	--background: var(--grey-800);
-	--on-background: var(--grey-800);
+	--on-background: var(--grey-700);
 	--background-secondary: var(--grey-900);
 	--background-gradient: linear-gradient(180deg, rgb(31 41 55 / 100%) 0%, rgb(17 24 39 / 100%) 100%);
 	--background-tertiary: var(--grey-950);

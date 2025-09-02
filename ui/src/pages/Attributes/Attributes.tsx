@@ -1,5 +1,5 @@
 // import { useEffect } from 'react';
-import { TableSection } from './modules';
+import { AttributeTableSection } from './modules';
 import Layout from '@/layout';
 
 export function Attributes() {
@@ -27,7 +27,7 @@ export function Attributes() {
 	// });
 	return (
 		<Layout>
-			<TableSection />
+			<AttributeTableSection />
 		</Layout>
 	);
 }

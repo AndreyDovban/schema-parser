@@ -70,6 +70,24 @@ export function Header({ className, ...props }: HeaderProps) {
 		}
 	}, [data, setSchema, error]);
 
+	// В эффекте выводится инвормаци ответа сервере
+	// useEffect(() => {
+	// 	if (info) {
+	// 		console.log('INFO', info);
+	// 	}
+	// }, [info]);
+
+	// Вывод лоадера при ожидании ответа
+	// if (loading) {
+	// 	console.log('Загрузка');
+	// 	<Section className={styles.table_section}>LOADING...</Section>;
+	// }
+
+	// Вывод инфорамции об ошибке
+	// if (error) {
+	// 	return <Section className={styles.table_section}>Ошибка: {error.message}</Section>;
+	// }
+
 	return (
 		<header className={cn(className, styles.header)} {...props}>
 			<div className={styles.inputs_block}>

@@ -1,10 +1,10 @@
 import Layout from '@/layout';
-import { TableSection } from './modules';
+import { ObjectClassTableSection } from './modules';
 
 export function ObjectClasses() {
 	return (
 		<Layout>
-			<TableSection />
+			<ObjectClassTableSection />
 		</Layout>
 	);
 }
