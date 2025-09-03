@@ -65,9 +65,15 @@ export function BuilderSection() {
 	const { choosedObjectClasses, setChoosedObjectClasses } = choosedObjectClassesStore();
 	const { namesAttributes, setNamesAttributes } = namesAttributesStore();
 	const { targetAttribute, setTargetAttribute } = targetAttributeStore();
+	const [requiredAttrs, setRequiredAttrs] = useState<string[]>([]);
 
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+	// const hashObjectClasses = [...schema.objectclasses].reduce((acc: Record<string, IObjectClass>, el) => {
+	// 	acc[el.NAME] = el;
+	// 	return acc;
+	// }, {});
 
 	// Объект таблица
 	const table = useReactTable({
@@ -92,18 +98,31 @@ export function BuilderSection() {
 	function handleChooseObj(objcl: IObjectClass) {
 		let objectClassesArr: IObjectClass[] = [];
 		let namesArr: string[] = [];
+		let req: string[] = [];
 
-		// console.log(objcl.SUP);
 		if (choosedObjectClasses.includes(objcl)) {
 			objectClassesArr = [...choosedObjectClasses].filter((el: IObjectClass) => el != objcl);
 		} else {
 			objectClassesArr = [...choosedObjectClasses, objcl];
 		}
 
+		// for (const el of objectClassesArr) {
+		// 	if (el.SUP) {
+		// 		if (choosedObjectClasses.includes(hashObjectClasses[el.SUP])) {
+		// 			objectClassesArr = [...objectClassesArr].filter(
+		// 				(el: IObjectClass) => el != hashObjectClasses[el.SUP],
+		// 			);
+		// 		} else {
+		// 			objectClassesArr = [...objectClassesArr, hashObjectClasses[el.SUP]];
+		// 		}
+		// 	}
+		// }
+
 		for (const el of objectClassesArr) {
 			if (el.MUST) {
 				for (const m of el.MUST) {
 					namesArr.push(m);
+					req.push(m);
 				}
 			}
 
@@ -115,8 +134,9 @@ export function BuilderSection() {
 		}
 
 		namesArr = [...new Set(namesArr)];
+		req = [...new Set(req)];
 		setNamesAttributes(namesArr);
-
+		setRequiredAttrs(req);
 		setChoosedObjectClasses(objectClassesArr);
 	}
 
@@ -140,9 +160,6 @@ export function BuilderSection() {
 	return (
 		<Section className={styles.table_section}>
 			<div className={styles.object_classes}>
-				{/* <button className={styles.clear} onClick={handleClearChoose}>
-					очистить
-				</button> */}
 				<table className={styles.table}>
 					<thead className={styles.thead}>
 						{table.getHeaderGroups().map(headerGroup => (
@@ -173,6 +190,16 @@ export function BuilderSection() {
 													</span>
 
 													<button
+														title="Очистить фильтр"
+														onClick={e => clearFilter(e, header.column)}
+														className={cn(styles.icon_button, {
+															[styles.active]: header.column.getFilterValue(),
+														})}
+													>
+														<Close />
+													</button>
+
+													<button
 														title="Сортировать по названию"
 														className={cn(styles.icon_button, {
 															[styles.active]: header.column.getIsSorted(),
@@ -182,16 +209,6 @@ export function BuilderSection() {
 															asc: <SortDown />,
 															desc: <SortUp />,
 														}[header.column.getIsSorted() as string] ?? <Sort />}
-													</button>
-
-													<button
-														title="Очистить фильтр"
-														onClick={e => clearFilter(e, header.column)}
-														className={cn(styles.icon_button, {
-															[styles.active]: header.column.getFilterValue(),
-														})}
-													>
-														<Close />
 													</button>
 
 													<button
@@ -256,8 +273,14 @@ export function BuilderSection() {
 					for (const n of el.NAME) {
 						if (namesAttributes.includes(n)) {
 							return (
-								<button onClick={() => handleChooseAttribute(el)} key={i} className={styles.attribute}>
-									{el.NAME}
+								<button
+									onClick={() => handleChooseAttribute(el)}
+									key={i}
+									className={cn(styles.attribute, {
+										[styles.is_require]: requiredAttrs.includes(n),
+									})}
+								>
+									{el.NAME.join(' ')}
 								</button>
 							);
 						}

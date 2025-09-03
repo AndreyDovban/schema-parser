@@ -17,10 +17,6 @@
 	text-wrap: balance;
 }
 
-.active svg {
-	fill: #00f200 !important;
-}
-
 /* таблица объект классов */
 .object_classes {
 	overflow-y: scroll;
@@ -160,4 +156,14 @@
 
 	background: var(--background-secondary);
 	border: 1px solid var(--border-secondary);
+}
+
+/* классы для обозначения интерактивоности */
+.active svg {
+	fill: #00f200;
+}
+
+.is_require {
+	color: black;
+	background: #f28900;
 }
