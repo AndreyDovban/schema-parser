@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 import cn from 'classnames';
 import { useEffect, useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
-import Link from '@/assets/svg/link.svg?react';
+import Tower from '@/assets/svg/tower.svg?react';
 import Refresh from '@/assets/svg/refresh.svg?react';
 // import { useRecoilState } from 'recoil';
 // import { authDataState } from '@/store/authDataState';
@@ -129,12 +129,13 @@ export function Header({ className, ...props }: HeaderProps) {
 					className={cn(styles.button_icon, { [styles.is_authorized]: isAuthorized })}
 					onClick={handleSubmit}
 				>
-					<Link />
+					<Tower />
 				</button>
 				<button
 					title="Обновить данные"
 					className={cn(styles.button_icon, {
 						['off']: !isAuthorized,
+						[styles.off]: !isAuthorized,
 					})}
 					onClick={handleRefresh}
 				>

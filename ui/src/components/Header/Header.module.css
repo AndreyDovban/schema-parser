@@ -16,6 +16,10 @@
 	align-items: flex-end;
 }
 
+.inputs_block input {
+	font-weight: 600;
+}
+
 .address {
 	width: 300px;
 }
@@ -47,7 +51,7 @@
 .button_icon svg {
 	width: 24px;
 	height: 24px;
-	fill: var(--icon-primary);
+	fill: var(--text-primary);
 }
 
 .button_icon:hover svg {
@@ -55,7 +59,11 @@
 }
 
 .is_authorized svg {
-	fill: green;
+	fill: #00f200;
+}
+
+.off svg {
+	fill: var(--icon-primary);
 }
 
 .button_icon.disabled {

@@ -8,3 +8,21 @@
 	background: var(--background-secondary);
 	border: 1px solid var(--border-secondary);
 }
+
+.icon {
+	cursor: pointer;
+}
+
+.icon svg {
+	width: 24px;
+	height: 24px;
+	fill: var(--text-primary);
+}
+
+.icon:hover svg {
+	fill: var(--red);
+}
+
+.active svg {
+	fill: #00f200;
+}
