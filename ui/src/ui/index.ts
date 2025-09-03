@@ -7,3 +7,4 @@ export * from './Checkbox/Checkbox';
 export * from './Range/Range';
 export * from './Select/Select';
 export * from './Textarea/Textarea';
+export * from './DebounceInput/DebounceInput';
