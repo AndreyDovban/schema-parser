@@ -8,6 +8,7 @@ interface ISchemaStore {
 
 const initial: ISchema = { attributes: [], objectclasses: [] };
 
+// Атом состояния - данные схемы поллученные с сервера
 export const useSchemaStore = create<ISchemaStore>(set => {
 	return {
 		schema: initial,

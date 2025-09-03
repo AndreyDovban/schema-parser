@@ -7,6 +7,7 @@ interface IIsAithorized {
 
 const initial = false;
 
+// Атом состояния - авторизаван ли пользователь
 export const useIsAithorizedStore = create<IIsAithorized>(set => {
 	return {
 		isAuthorized: initial,

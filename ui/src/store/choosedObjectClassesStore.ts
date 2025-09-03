@@ -8,6 +8,7 @@ interface IChoosedObjClasses {
 
 const initial: IObjectClass[] = [];
 
+// Атом состояния - выбранные объект классы
 export const choosedObjectClassesStore = create<IChoosedObjClasses>(set => {
 	return {
 		choosedObjectClasses: initial,

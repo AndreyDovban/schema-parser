@@ -1,4 +1,5 @@
 export * from './useIsAithorizedStore';
 export * from './useSchemaStore';
 export * from './choosedObjectClassesStore';
-export * from './choosedAttributesStore';
+export * from './targetAttributeStore';
+export * from './namesAttributesStore';

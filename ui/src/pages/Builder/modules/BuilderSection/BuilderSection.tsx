@@ -1,16 +1,14 @@
 import styles from './BuilderSection.module.css';
 import { CheckBox, Section } from '@/ui';
 import { useSchemaStore } from '@/store/useSchemaStore';
-import { choosedObjectClassesStore } from '@/store';
+import { choosedObjectClassesStore, targetAttributeStore, namesAttributesStore } from '@/store';
 import type { IObjectClass, IAttribute } from '@/interfaces';
-import { useState } from 'react';
 
 export function BuilderSection() {
 	const { schema } = useSchemaStore();
 	const { choosedObjectClasses, setChoosedObjectClasses } = choosedObjectClassesStore();
-	// const { choosedAttributes, setChoosedAttributes } = choosedAttributesStore();
-	const [names, setNames] = useState<string[]>([]);
-	const [targetAttribute, setTargeAttribute] = useState<IAttribute>();
+	const { namesAttributes, setNamesAttributes } = namesAttributesStore();
+	const { targetAttribute, setTargetAttribute } = targetAttributeStore();
 
 	if (!schema.attributes.length || !schema.attributes.length) {
 		return <Section className={styles.error_message}>Данные схемы не получены</Section>;
@@ -41,19 +39,19 @@ export function BuilderSection() {
 		}
 
 		namesArr = [...new Set(namesArr)];
-		setNames(namesArr);
+		setNamesAttributes(namesArr);
 
 		setChoosedObjectClasses(objectClassesArr);
 	}
 
 	function handleClearChoose() {
 		setChoosedObjectClasses([]);
-		setNames([]);
-		setTargeAttribute(undefined);
+		setNamesAttributes([]);
+		setTargetAttribute(undefined);
 	}
 
 	function handleChooseAttribute(attribute: IAttribute) {
-		setTargeAttribute(attribute);
+		setTargetAttribute(attribute);
 	}
 
 	return (
@@ -88,7 +86,7 @@ export function BuilderSection() {
 			<div className={styles.attributes}>
 				{schema.attributes.map((el, i) => {
 					for (const n of el.NAME) {
-						if (names.includes(n)) {
+						if (namesAttributes.includes(n)) {
 							return (
 								<button onClick={() => handleChooseAttribute(el)} key={i} className={styles.attribute}>
 									{el.NAME}
