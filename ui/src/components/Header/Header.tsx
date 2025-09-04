@@ -3,8 +3,6 @@ import cn from 'classnames';
 import { useEffect, useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import Tower from '@/assets/svg/tower.svg?react';
 import Refresh from '@/assets/svg/refresh.svg?react';
-// import { useRecoilState } from 'recoil';
-// import { authDataState } from '@/store/authDataState';
 import { useIsAithorizedStore, useSchemaStore } from '@/store';
 import type { ISchema } from '@/interfaces';
 import { useRequest } from '@/hooks/useRequest';
@@ -52,8 +50,6 @@ export function Header({ className, ...props }: HeaderProps) {
 			if (error instanceof Error && error.name !== 'AbortError') {
 				setIsAuthorized(false);
 			}
-		} finally {
-			console.log('finally');
 		}
 	}
 

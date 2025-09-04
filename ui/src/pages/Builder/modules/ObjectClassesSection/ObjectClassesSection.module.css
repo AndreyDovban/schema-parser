@@ -1,0 +1,86 @@
+.object_classes_section {
+	overflow-y: scroll;
+	grid-area: object-classes;
+
+	min-width: 300px;
+	padding-inline: var(--s-4);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}
+
+.table {
+	border-collapse: collapse;
+	width: 100%;
+	font: var(--font-l2);
+	color: var(--text-primary);
+}
+
+.thead {
+	position: sticky;
+	z-index: 10;
+	top: 0;
+	background: var(--background-secondary);
+}
+
+.th {
+	cursor: pointer;
+
+	position: relative;
+
+	width: fit-content;
+	padding-block: var(--s-4);
+
+	font-weight: 500;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.thblock {
+	display: flex;
+	gap: var(--s-2);
+}
+
+.icon_button {
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	text-align: center;
+
+	background: none;
+	border: none;
+}
+
+.icon_button svg {
+	pointer-events: none;
+
+	width: 20px;
+	height: 20px;
+
+	font: inherit;
+
+	fill: var(--text-primary);
+}
+
+.icon_button:hover svg {
+	fill: var(--red);
+}
+
+.object_class {
+	cursor: pointer;
+	display: flex;
+	gap: var(--s-4);
+	align-items: center;
+}
+
+.object_class:hover {
+	color: var(--red);
+}
+
+/* подсветка активных иконок */
+.active svg {
+	fill: #00f200;
+}

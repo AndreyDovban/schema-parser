@@ -1,0 +1,43 @@
+.search_block {
+	display: flex;
+	gap: var(--s-2);
+	align-items: center;
+
+	padding: var(--s-2);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}
+
+.search_block input {
+	width: 800px;
+	font-weight: 600;
+}
+
+.icon_button {
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	text-align: center;
+
+	background: none;
+	border: none;
+}
+
+.icon_button svg {
+	pointer-events: none;
+
+	width: 20px;
+	height: 20px;
+
+	font: inherit;
+
+	fill: var(--text-primary);
+}
+
+.icon_button:hover svg {
+	fill: var(--red);
+}

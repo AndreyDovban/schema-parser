@@ -20,3 +20,13 @@ export interface ISchema {
 	attributes: IAttribute[];
 	objectclasses: IObjectClass[];
 }
+
+export interface IHashIndexObject {
+	attrs: string[];
+	supers: string[];
+}
+
+export interface ITargetPseudoObjectClass {
+	name: string;
+	attrs: string[];
+}

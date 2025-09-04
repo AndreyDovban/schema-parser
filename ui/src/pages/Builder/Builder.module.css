@@ -1,0 +1,46 @@
+.builder_page {
+	display: grid;
+	grid-template-areas:
+		'search_block search_block search_block search_block'
+		'object-classes choosed-object-classes attributes target-attribute';
+	grid-template-columns: auto 1fr auto 1fr;
+	grid-template-rows: auto auto;
+	gap: var(--s-2);
+
+	height: 100%;
+}
+
+.error_message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+
+	text-wrap: balance;
+}
+
+/* блок для поиска объекта */
+.search_block {
+	grid-area: search_block;
+}
+
+/* таблица объект классов */
+.object_classes {
+	grid-area: object-classes;
+}
+
+/* блок иерархии выбранных объект классов */
+.choosed_object_classes {
+	grid-area: choosed-object-classes;
+}
+
+/* блок полученных атрибутоы */
+.attributes {
+	grid-area: attributes;
+}
+
+/* блок показа информации об атрибуте */
+.target_attribute {
+	grid-area: target-attribute;
+}
