@@ -114,9 +114,19 @@
 }
 
 .tree_object_class {
+	cursor: pointer;
+
 	padding: var(--s-1);
+
+	color: var(--text-primary);
+	text-align: start;
+
 	background: var(--background);
 	border: 1px solid var(--border-secondary);
+}
+
+.tree_object_class:hover {
+	filter: brightness(1.6);
 }
 
 /* блок полученных атрибутоы */
@@ -144,6 +154,10 @@
 	border: 1px solid var(--border-secondary);
 }
 
+.attribute:hover {
+	filter: brightness(1.6);
+}
+
 /* блок показа информации об атрибуте */
 .out_attribute {
 	overflow-y: scroll;
@@ -159,11 +173,26 @@
 }
 
 /* классы для обозначения интерактивоности */
+
+/* подсветка активных иконок */
 .active svg {
 	fill: #00f200;
 }
 
+/* подсветка выбранного объект калссса */
+.is_target_object_class {
+	color: black;
+	background: var(--grey-300);
+}
+
+/* подсветка обязательных атрибутов */
 .is_require {
 	color: black;
 	background: #f28900;
+}
+
+/* подсветка атрибутов выбранного объект класса */
+.attrs_for_target_object_class {
+	pointer-events: none;
+	opacity: 0.2;
 }

@@ -60,48 +60,20 @@ function Filter({ column }: { column: Column<IObjectClass, unknown> }) {
 	);
 }
 
-interface IHashIndexObject {
-	attrs: string[];
-	supers: string[];
-}
-
-interface ITargetObjectClass {
-	name: string;
-	attrs: string[];
-}
-
 export function BuilderSection() {
 	const { schema } = useSchemaStore();
 	const { choosedObjectClasses, setChoosedObjectClasses } = choosedObjectClassesStore();
 	const { namesAttributes, setNamesAttributes } = namesAttributesStore();
 	const { targetAttribute, setTargetAttribute } = targetAttributeStore();
 	const [requiredAttrs, setRequiredAttrs] = useState<string[]>([]);
-	const [targetObjClass, setTargetObjectClass] = useState<ITargetObjectClass>({ name: '', attrs: [] });
-
-	const hashObjects = schema.objectclasses.reduce((acc: Record<string, IObjectClass>, el) => {
-		acc[el.NAME] = el;
-		return acc;
-	}, {});
-
-	function getAllSupers(name: string): string[] {
-		const result: string[] = [];
-		if (hashObjects[name]['SUP']) {
-			result.push(hashObjects[name]['SUP'], ...getAllSupers(hashObjects[name]['SUP']));
-		}
-
-		return result;
-	}
-
-	const hashShcema = schema.objectclasses.reduce((acc: Record<string, IHashIndexObject>, el) => {
-		acc[el.NAME] = {
-			attrs: [],
-			supers: getAllSupers(el.NAME),
-		};
-		return acc;
-	}, {});
 
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+	// const hashObjectClasses = [...schema.objectclasses].reduce((acc: Record<string, IObjectClass>, el) => {
+	// 	acc[el.NAME] = el;
+	// 	return acc;
+	// }, {});
 
 	// Объект таблица
 	const table = useReactTable({
@@ -130,22 +102,21 @@ export function BuilderSection() {
 
 		if (choosedObjectClasses.includes(objcl)) {
 			objectClassesArr = [...choosedObjectClasses].filter((el: IObjectClass) => el != objcl);
-			const toDeleteChildten: string[] = [];
-			for (const el of objectClassesArr) {
-				if (hashShcema[el.NAME].supers.includes(objcl.NAME)) {
-					toDeleteChildten.push(el.NAME);
-				}
-			}
-			objectClassesArr = objectClassesArr.filter((el: IObjectClass) => !toDeleteChildten.includes(el.NAME));
 		} else {
-			const arr = [objcl];
-			for (const el of hashShcema[objcl.NAME].supers) {
-				if (!choosedObjectClasses.includes(hashObjects[el])) {
-					arr.push(hashObjects[el]);
-				}
-			}
-			objectClassesArr = [...choosedObjectClasses, ...arr];
+			objectClassesArr = [...choosedObjectClasses, objcl];
 		}
+
+		// for (const el of objectClassesArr) {
+		// 	if (el.SUP) {
+		// 		if (choosedObjectClasses.includes(hashObjectClasses[el.SUP])) {
+		// 			objectClassesArr = [...objectClassesArr].filter(
+		// 				(el: IObjectClass) => el != hashObjectClasses[el.SUP],
+		// 			);
+		// 		} else {
+		// 			objectClassesArr = [...objectClassesArr, hashObjectClasses[el.SUP]];
+		// 		}
+		// 	}
+		// }
 
 		for (const el of objectClassesArr) {
 			if (el.MUST) {
@@ -167,7 +138,6 @@ export function BuilderSection() {
 		setNamesAttributes(namesArr);
 		setRequiredAttrs(req);
 		setChoosedObjectClasses(objectClassesArr);
-		setTargetObjectClass({ name: '', attrs: [] });
 	}
 
 	function handleClearChoose(e: MouseEvent) {
@@ -175,30 +145,14 @@ export function BuilderSection() {
 		setChoosedObjectClasses([]);
 		setNamesAttributes([]);
 		setTargetAttribute(undefined);
-		setTargetObjectClass({ name: '', attrs: [] });
 	}
 
 	function handleChooseAttribute(attribute: IAttribute) {
 		setTargetAttribute(attribute);
 	}
 
-	function handleShowAttrsOfObjectClass(objcl: IObjectClass) {
-		let arr: string[] = [];
-		if (objcl.MUST) {
-			arr = arr.concat(objcl.MUST);
-		}
-		if (objcl.MAY) {
-			arr = arr.concat(objcl.MAY);
-		}
-		if (targetObjClass.name == objcl.NAME) {
-			setTargetObjectClass({ name: '', attrs: [] });
-		} else {
-			setTargetObjectClass({ name: objcl.NAME, attrs: arr });
-		}
-	}
-
 	// Функция сброса фильтрации
-	function handleClearFilter(e: MouseEvent, column: Column<IObjectClass, unknown>) {
+	function clearFilter(e: MouseEvent, column: Column<IObjectClass, unknown>) {
 		e.stopPropagation();
 		column.setFilterValue(undefined);
 	}
@@ -237,7 +191,7 @@ export function BuilderSection() {
 
 													<button
 														title="Очистить фильтр"
-														onClick={e => handleClearFilter(e, header.column)}
+														onClick={e => clearFilter(e, header.column)}
 														className={cn(styles.icon_button, {
 															[styles.active]: header.column.getFilterValue(),
 														})}
@@ -307,15 +261,9 @@ export function BuilderSection() {
 			<div className={styles.tree_object_classes}>
 				{choosedObjectClasses.map((el, i) => {
 					return (
-						<button
-							onClick={() => handleShowAttrsOfObjectClass(el)}
-							key={i}
-							className={cn(styles.tree_object_class, {
-								[styles.is_target_object_class]: targetObjClass.name == el.NAME,
-							})}
-						>
+						<div key={i} className={styles.tree_object_class}>
 							{el.NAME}
-						</button>
+						</div>
 					);
 				})}
 			</div>
@@ -330,8 +278,6 @@ export function BuilderSection() {
 									key={i}
 									className={cn(styles.attribute, {
 										[styles.is_require]: requiredAttrs.includes(n),
-										[styles.attrs_for_target_object_class]:
-											targetObjClass.name && !targetObjClass.attrs.includes(el.NAME[0]),
 									})}
 								>
 									{el.NAME.join(' ')}

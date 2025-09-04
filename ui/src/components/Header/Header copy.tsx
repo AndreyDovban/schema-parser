@@ -3,8 +3,6 @@ import cn from 'classnames';
 import { useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import Link from '@/assets/svg/link.svg?react';
 import Refresh from '@/assets/svg/refresh.svg?react';
-// import { useRecoilState } from 'recoil';
-// import { authDataState } from '@/store/authDataState';
 import { useIsAithorizedStore } from '@/store';
 
 interface HeaderProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
@@ -45,8 +43,6 @@ export function Header({ className, ...props }: HeaderProps) {
 			if (error instanceof Error && error.name !== 'AbortError') {
 				setIsAuthorized(false);
 			}
-		} finally {
-			console.log('finally');
 		}
 	}
 
