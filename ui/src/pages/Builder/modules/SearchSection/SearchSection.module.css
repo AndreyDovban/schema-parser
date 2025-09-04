@@ -41,3 +41,8 @@
 .icon_button:hover svg {
 	fill: var(--red);
 }
+
+.off {
+	pointer-events: none;
+	opacity: 0.2;
+}

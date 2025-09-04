@@ -27,6 +27,10 @@ type IAuth struct {
 	Password string `json:"password"`
 }
 
+type Entity struct {
+	BaseDn string `json:"baseDn"`
+}
+
 func main() {
 	// config := configs.LoadConfig()
 
@@ -90,6 +94,20 @@ func main() {
 
 	app.Get("/api/test", func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusOK).SendFile("./data.json")
+	})
+
+	app.Post("/api/search", func(c *fiber.Ctx) error {
+		var dn Entity
+		c.BodyParser(&dn)
+		objectClasses, err := connect.GetEntityByDn(conn, dn.BaseDn)
+		if err != nil {
+			fmt.Println("Get Entity By Dn Error", err.Error())
+		}
+
+		fmt.Println("OBJECT CLASSES ", objectClasses)
+
+		// return c.Status(fiber.StatusOK).SendString("objectClasses")
+		return c.Status(fiber.StatusOK).JSON(objectClasses)
 	})
 
 	// app.Get("/api/close", func(c *fiber.Ctx) error {
