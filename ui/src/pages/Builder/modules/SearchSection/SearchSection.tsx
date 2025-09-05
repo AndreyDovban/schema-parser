@@ -41,7 +41,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 	}
 
 	function handlerDownload() {
-		const file = new File([JSON.stringify(namesAttributes, null, 4)], `${targetEntity}.json`, {
+		const file = new File([JSON.stringify(namesAttributes.sort(), null, 4)], `${targetEntity}.json`, {
 			type: 'application/json',
 		});
 
