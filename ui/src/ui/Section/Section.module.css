@@ -1,6 +1,4 @@
 .section {
-	display: flex;
-	gap: var(--s-4);
 	width: 100%;
 	max-width: var(--max-width);
 }
