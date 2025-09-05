@@ -17,10 +17,10 @@ export function Header({ className, ...props }: HeaderProps) {
 	const { setSchema } = useSchemaStore();
 
 	const [authData, setAuthData] = useState({
-		address: 'ldaps://dc01.granulex.test',
-		port: '636',
-		login: 'uid=admin,cn=users,cn=accounts,dc=granulex,dc=test',
-		password: '12345678',
+		address: '',
+		port: '',
+		login: '',
+		password: '',
 	});
 
 	function handleCahangeAuthData(e: ChangeEvent<HTMLInputElement>) {
