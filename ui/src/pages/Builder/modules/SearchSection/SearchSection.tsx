@@ -2,7 +2,8 @@ import { Section } from '@/ui';
 import cn from 'classnames';
 import styles from './SearchSection.module.css';
 import Search from '@/assets/svg/search.svg?react';
-import { useEffect, useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
+import Download from '@/assets/svg/download.svg?react';
+import { useEffect, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import { useRequest } from '@/hooks/useRequest';
 import {
 	choosedObjectClassesStore,
@@ -10,6 +11,7 @@ import {
 	requiredAttrsStore,
 	targetPseudoObjectClassStore,
 	useSchemaStore,
+	targetEntityStore,
 } from '@/store';
 import type { IObjectClass } from '@/interfaces';
 
@@ -20,12 +22,12 @@ interface SearchSectionProps extends DetailedHTMLProps<HTMLAttributes<HTMLElemen
 export function SearchSection({ className, ...props }: SearchSectionProps) {
 	const { schema } = useSchemaStore();
 	const { setChoosedObjectClasses } = choosedObjectClassesStore();
-	const { setNamesAttributes } = namesAttributesStore();
+	const { namesAttributes, setNamesAttributes } = namesAttributesStore();
 	const { setRequiredAttrs } = requiredAttrsStore();
 	const { setTargetPseudoObjectClass } = targetPseudoObjectClassStore();
 
 	const { data, request } = useRequest<string[]>('/api/search');
-	const [value, setValue] = useState('');
+	const { targetEntity, setTargetEntity } = targetEntityStore();
 
 	const hashObjects = schema.objectclasses.reduce((acc: Record<string, IObjectClass>, el) => {
 		acc[el.NAME] = el;
@@ -33,9 +35,22 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 	}, {});
 
 	function handlerSearch() {
-		if (value) {
-			request({ method: 'POST', body: { baseDn: value } });
+		if (targetEntity) {
+			request({ method: 'POST', body: { baseDn: targetEntity } });
 		}
+	}
+
+	function handlerDownload() {
+		const file = new File([JSON.stringify(namesAttributes)], `${targetEntity}.json`, {
+			type: 'application/json',
+		});
+
+		const link = document.createElement('a');
+		link.download = file.name;
+
+		link.href = URL.createObjectURL(file);
+		link.click();
+		URL.revokeObjectURL(link.href);
 	}
 
 	useEffect(() => {
@@ -80,16 +95,25 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 			<input
 				placeholder="Search entity by distigushidName..."
 				type="text"
-				value={value}
-				onInput={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+				value={targetEntity}
+				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetEntity(e.target.value)}
 			/>
 			<button
 				onClick={handlerSearch}
 				className={cn(styles.icon_button, {
-					[styles.off]: !value,
+					[styles.off]: !targetEntity,
 				})}
 			>
 				<Search />
+			</button>
+			<span className={styles.grow}></span>
+			<button
+				onClick={handlerDownload}
+				className={cn(styles.icon_button, {
+					[styles.off]: !targetEntity,
+				})}
+			>
+				<Download />
 			</button>
 		</Section>
 	);

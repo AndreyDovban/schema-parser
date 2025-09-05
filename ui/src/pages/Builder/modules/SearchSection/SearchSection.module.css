@@ -46,3 +46,7 @@
 	pointer-events: none;
 	opacity: 0.2;
 }
+
+.grow {
+	flex-grow: 1;
+}

@@ -6,3 +6,4 @@ export * from './targetPseudoObjectClassStore';
 export * from './useIsAithorizedStore';
 export * from './useSchemaStore';
 export * from './authDataStore';
+export * from './targetEntityStore';
