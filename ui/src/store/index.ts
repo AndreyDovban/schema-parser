@@ -5,3 +5,4 @@ export * from './targetAttributeStore';
 export * from './targetPseudoObjectClassStore';
 export * from './useIsAithorizedStore';
 export * from './useSchemaStore';
+export * from './authDataStore';

@@ -1,3 +1,10 @@
+export interface IAuthData {
+	address: string;
+	port: string;
+	login: string;
+	password: string;
+}
+
 export interface IAttribute {
 	DESC: string;
 	NAME: string[];

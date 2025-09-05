@@ -104,9 +104,6 @@ func main() {
 			fmt.Println("Get Entity By Dn Error", err.Error())
 		}
 
-		fmt.Println("OBJECT CLASSES ", objectClasses)
-
-		// return c.Status(fiber.StatusOK).SendString("objectClasses")
 		return c.Status(fiber.StatusOK).JSON(objectClasses)
 	})
 

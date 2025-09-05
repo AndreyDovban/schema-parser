@@ -1,9 +1,9 @@
 import styles from './Header.module.css';
 import cn from 'classnames';
-import { useEffect, useState, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
+import { useEffect, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import Tower from '@/assets/svg/tower.svg?react';
 import Refresh from '@/assets/svg/refresh.svg?react';
-import { useIsAithorizedStore, useSchemaStore } from '@/store';
+import { useIsAithorizedStore, useSchemaStore, authDataStore } from '@/store';
 import type { ISchema } from '@/interfaces';
 import { useRequest } from '@/hooks/useRequest';
 
@@ -15,13 +15,7 @@ export function Header({ className, ...props }: HeaderProps) {
 	const { isAuthorized, setIsAuthorized } = useIsAithorizedStore();
 	const { data, error, request } = useRequest<ISchema>('/api/schema'); // Хук запроса к серверу
 	const { setSchema } = useSchemaStore();
-
-	const [authData, setAuthData] = useState({
-		address: '',
-		port: '',
-		login: '',
-		password: '',
-	});
+	const { authData, setAuthData } = authDataStore();
 
 	function handleCahangeAuthData(e: ChangeEvent<HTMLInputElement>) {
 		setAuthData({ ...authData, [e.target.placeholder]: e.target.value });
