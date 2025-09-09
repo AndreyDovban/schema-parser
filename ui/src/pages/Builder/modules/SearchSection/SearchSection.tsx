@@ -41,7 +41,16 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 	}
 
 	function handlerDownload() {
-		const file = new File([JSON.stringify(namesAttributes.sort(), null, 4)], `${targetEntity}.json`, {
+		const result = namesAttributes.sort().reduce((acc: [string, boolean][], el, i) => {
+			for (const at of schema.attributes) {
+				if (at.NAME.includes(el)) {
+					acc[i] = [el, at.SINGLE_VALUE];
+				}
+			}
+
+			return acc;
+		}, []);
+		const file = new File([JSON.stringify(result, null, 4)], `${targetEntity}.json`, {
 			type: 'application/json',
 		});
 
