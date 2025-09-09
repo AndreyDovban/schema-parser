@@ -27,3 +27,6 @@ dist-ssr
 data.json
 schema-parser
 schema-parser.exe
+test.json
+multivalue-attributes.json
+multivalue-attributes copy.json
