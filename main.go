@@ -107,6 +107,17 @@ func main() {
 		return c.Status(fiber.StatusOK).JSON(objectClasses)
 	})
 
+	app.Post("/api/get_aci_for_entity", func(c *fiber.Ctx) error {
+		var dn Entity
+		c.BodyParser(&dn)
+		aci, err := connect.GetAciEntityByDn(conn, dn.BaseDn)
+		if err != nil {
+			fmt.Println("Get Entity By Dn Error", err.Error())
+		}
+
+		return c.Status(fiber.StatusOK).JSON(aci)
+	})
+
 	// app.Get("/api/close", func(c *fiber.Ctx) error {
 	// 	log.Fatal("CLOSED")
 	// 	return c.SendStatus(fiber.StatusOK)

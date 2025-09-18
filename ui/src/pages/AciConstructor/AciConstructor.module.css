@@ -1,0 +1,21 @@
+.aci_constructor_page {
+	display: grid;
+	grid-template-areas:
+		'search_block'
+		'out_block';
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 1fr;
+	gap: var(--s-2);
+
+	height: 100%;
+}
+
+/* блок для поиска объекта */
+.search_block {
+	grid-area: search_block;
+}
+
+/* блок вывода ответа */
+.out_block {
+	grid-area: out_block;
+}

@@ -2,7 +2,7 @@ import './styles/index.css';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
-import { Attributes, ObjectClasses, Builder, Home } from '@/pages';
+import { Attributes, ObjectClasses, Builder, Home, AciConstructor } from '@/pages';
 // import { RecoilRoot } from 'recoil';
 
 const router = createBrowserRouter([
@@ -21,6 +21,10 @@ const router = createBrowserRouter([
 	{
 		path: '/builder',
 		element: <Builder />,
+	},
+	{
+		path: '/aciconstructor',
+		element: <AciConstructor />,
 	},
 ]);
 

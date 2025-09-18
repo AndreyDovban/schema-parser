@@ -1,0 +1,10 @@
+.search_block {
+	display: flex;
+	gap: var(--s-2);
+	align-items: center;
+
+	padding: var(--s-2);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}
