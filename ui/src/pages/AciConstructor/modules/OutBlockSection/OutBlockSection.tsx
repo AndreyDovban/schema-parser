@@ -12,7 +12,7 @@ export function OutBlockSection({ className, ...props }: SearchSectionProps) {
 	const { listAciEntity } = listAciEntityStore();
 
 	return (
-		<Section className={cn(className, styles.search_block)} {...props}>
+		<Section className={cn(className, styles.out_block)} {...props}>
 			<pre>{JSON.stringify(listAciEntity, null, 4)}</pre>
 		</Section>
 	);

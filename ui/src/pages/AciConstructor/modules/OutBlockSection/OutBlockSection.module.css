@@ -1,10 +1,15 @@
-.search_block {
+.out_block {
+	overflow: auto;
 	display: flex;
+	flex-direction: column;
 	gap: var(--s-2);
-	align-items: center;
 
 	padding: var(--s-2);
 
 	background: var(--background-secondary);
 	border: 1px solid var(--border-secondary);
+}
+
+.out_block pre {
+	font-size: 16px;
 }
