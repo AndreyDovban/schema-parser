@@ -37,3 +37,11 @@ export interface ITargetPseudoObjectClass {
 	name: string;
 	attrs: string[];
 }
+
+export interface IAciForEntity {
+	acl: string;
+	version: string;
+	allow: string[];
+	target: string;
+	targetattr: string[];
+}

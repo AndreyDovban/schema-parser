@@ -6,7 +6,7 @@ interface IAuthDataStore {
 	setAuthData: (th: IAuthData) => void;
 }
 
-const initial: IAuthData = { address: '', port: '', login: '', password: '' };
+const initial: IAuthData = { address: 'ldaps://dc01.granulex.test', port: '636', login: '', password: '' };
 
 // Атом состояния - объект данные авторизации
 export const authDataStore = create<IAuthDataStore>(set => {

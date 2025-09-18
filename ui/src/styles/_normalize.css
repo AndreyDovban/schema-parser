@@ -34,7 +34,7 @@ nav {
 }
 
 main {
-	overflow-y: auto;
+	overflow-y: hidden;
 	grid-area: main;
 	flex-grow: 1;
 }
