@@ -1,0 +1,52 @@
+.options_block {
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-2);
+	align-items: center;
+
+	padding: var(--s-2);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}
+
+.icon_button {
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	text-align: center;
+
+	background: none;
+	border: none;
+}
+
+.icon_button svg {
+	pointer-events: none;
+
+	width: 20px;
+	height: 20px;
+
+	font: inherit;
+
+	fill: var(--text-primary);
+}
+
+.icon_button:hover svg {
+	fill: var(--red);
+}
+
+.off {
+	pointer-events: none;
+	opacity: 0.2;
+}
+
+.active svg {
+	fill: #00f200;
+}
+
+.grow {
+	flex-grow: 1;
+}

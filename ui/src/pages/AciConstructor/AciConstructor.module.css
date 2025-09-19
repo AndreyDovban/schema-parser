@@ -1,9 +1,9 @@
 .aci_constructor_page {
 	display: grid;
 	grid-template-areas:
-		'search_block'
-		'out_block';
-	grid-template-columns: 1fr;
+		'search_block search_block'
+		'options_block out_block';
+	grid-template-columns: auto 1fr;
 	grid-template-rows: auto 1fr;
 	gap: var(--s-2);
 
@@ -13,6 +13,11 @@
 /* блок для поиска объекта */
 .search_block {
 	grid-area: search_block;
+}
+
+/* блок опция aci конструктора */
+.options_block {
+	grid-area: options_block;
 }
 
 /* блок вывода ответа */

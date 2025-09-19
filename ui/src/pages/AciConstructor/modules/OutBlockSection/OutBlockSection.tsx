@@ -6,7 +6,7 @@ import Close from '@/assets/svg/close.svg?react';
 import Sort from '@/assets/svg/sort.svg?react';
 import SortDown from '@/assets/svg/sort-down.svg?react';
 import SortUp from '@/assets/svg/sort-up.svg?react';
-import { listAciEntityStore } from '@/store';
+import { columnAciVisibleStore, listAciEntityStore } from '@/store';
 import type { IAciForEntity } from '@/interfaces';
 import {
 	createColumnHelper,
@@ -37,6 +37,13 @@ const defaultData: IAciForEntity[] = [];
 const columnHelper = createColumnHelper<IAciForEntity>();
 
 const columns = [
+	columnHelper.accessor('location', {
+		id: 'location',
+		header: () => 'Локация',
+		cell: info => info.renderValue(),
+		sortingFn: 'textCaseSensitive',
+		filterFn: 'includesString',
+	}),
 	columnHelper.accessor('acl', {
 		id: 'acl',
 		header: () => 'Название',
@@ -44,12 +51,12 @@ const columns = [
 		sortingFn: 'textCaseSensitive',
 		filterFn: 'includesString',
 	}),
-	// columnHelper.accessor('version', {
-	// 	header: () => 'Версия',
-	// 	cell: info => info.renderValue(),
-	// 	sortingFn: 'textCaseSensitive',
-	// 	filterFn: 'includesString',
-	// }),
+	columnHelper.accessor('target', {
+		header: () => 'Целевой узел',
+		cell: info => info.renderValue(),
+		sortingFn: 'textCaseSensitive',
+		filterFn: 'includesString',
+	}),
 	columnHelper.accessor('allow', {
 		header: () => 'Предоставленные права',
 		cell: info => {
@@ -60,12 +67,6 @@ const columns = [
 		},
 		filterFn: 'includesString',
 	}),
-	columnHelper.accessor('target', {
-		header: () => 'Целевой узел',
-		cell: info => info.renderValue(),
-		sortingFn: 'textCaseSensitive',
-		filterFn: 'includesString',
-	}),
 	columnHelper.accessor('targetattr', {
 		header: () => 'Действующие атрибуты',
 		cell: info => {
@@ -74,6 +75,13 @@ const columns = [
 			}
 			return info.getValue();
 		},
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('raw', {
+		id: 'raw',
+		header: () => 'Строка aci',
+		cell: info => info.renderValue(),
+		sortingFn: 'textCaseSensitive',
 		filterFn: 'includesString',
 	}),
 ];
@@ -104,10 +112,31 @@ function Filter({ column }: { column: Column<IAciForEntity, unknown> }) {
 }
 
 export function OutBlockSection({ className, ...props }: SearchSectionProps) {
-	const { listAciEntity } = listAciEntityStore();
-	const [columnOrder] = useState(['Acl', 'Version', 'Allow', 'Target', 'Targetattr']);
+	const [columnOrder] = useState(['location', 'acl', 'allow', 'target', 'targetattr']);
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const { listAciEntity } = listAciEntityStore();
+	const { columnAciVisible } = columnAciVisibleStore();
+
+	let initialColumnsAciVisible = {
+		location: true,
+		acl: true,
+		allow: true,
+		target: true,
+		targetattr: true,
+		raw: false,
+	};
+
+	if (columnAciVisible == 'raw') {
+		initialColumnsAciVisible = {
+			location: true,
+			acl: false,
+			allow: false,
+			target: false,
+			targetattr: false,
+			raw: true,
+		};
+	}
 
 	// Объект таблица
 	const table = useReactTable({
@@ -116,6 +145,7 @@ export function OutBlockSection({ className, ...props }: SearchSectionProps) {
 		filterFns: {},
 		state: {
 			columnOrder,
+			columnVisibility: initialColumnsAciVisible,
 			columnFilters,
 			sorting,
 		},

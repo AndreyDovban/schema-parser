@@ -94,11 +94,12 @@
 
 	overflow: hidden;
 
-	max-width: 300px;
 	padding-inline: 10px;
 
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	vertical-align: top;
+
+	/* text-overflow: ellipsis;
+	white-space: nowrap; */
 
 	border: 1px solid var(--border-primary);
 }

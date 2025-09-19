@@ -14,11 +14,11 @@ type AciForEntity struct {
 	Acl        string   `json:"acl"`
 	Version    string   `json:"version"`
 	Allow      []string `json:"allow"`
+	Raw        string   `json:"raw"`
+	Location   string   `json:"location"`
 }
 
 func GetAciEntityByDn(conn *ldap.Conn, baseDN string) (any, error) {
-
-	listAciFoeEntity := []AciForEntity{}
 
 	// Search for the given username
 	searchRequest := ldap.NewSearchRequest(
@@ -34,9 +34,14 @@ func GetAciEntityByDn(conn *ldap.Conn, baseDN string) (any, error) {
 	}
 	aci := sr.Entries[0].GetAttributeValues("aci")
 
+	listAciFoeEntity := []AciForEntity{}
+
 	for _, a := range aci {
 
 		var aciForEntity AciForEntity
+
+		// Добавление узла нахождения aci
+		aciForEntity.Location = sr.Entries[0].DN
 
 		// Поиск target (налеливание на узел)
 		reTarget := regexp.MustCompile(`target = "(.*?)"`)
@@ -45,12 +50,21 @@ func GetAciEntityByDn(conn *ldap.Conn, baseDN string) (any, error) {
 			aciForEntity.Target = matchedTargetString[1]
 		}
 
-		// Поиск target (влкюченные атрибуты)
+		// Поиск оператора сравнения (влкюченные атрибуты)
+		reComparisonOperator := regexp.MustCompile(`targetattr.*?(=|!=)`)
+		matchedComparisonOperatorString := reComparisonOperator.FindStringSubmatch(a)
+		if len(matchedComparisonOperatorString) > 0 {
+			str := strings.ReplaceAll(matchedComparisonOperatorString[1], " ", "")
+			aciForEntity.TargetAttr = append(aciForEntity.TargetAttr, str)
+		}
+
+		// Поиск targetattr (влкюченные атрибуты)
 		reTargetattr := regexp.MustCompile(`targetattr.*?"(.*?)"`)
 		matchedTargetattrString := reTargetattr.FindStringSubmatch(a)
 		if len(matchedTargetattrString) > 0 {
 			str := strings.ReplaceAll(matchedTargetattrString[1], " ", "")
-			aciForEntity.TargetAttr = strings.Split(str, "||")
+			arr := strings.Split(str, "||")
+			aciForEntity.TargetAttr = append(aciForEntity.TargetAttr, arr...)
 		}
 
 		// Поиск версии aci
@@ -74,6 +88,9 @@ func GetAciEntityByDn(conn *ldap.Conn, baseDN string) (any, error) {
 			str := strings.ReplaceAll(matchedAllowString[1], " ", "")
 			aciForEntity.Allow = strings.Split(str, ",")
 		}
+
+		// Добавление сырых данных
+		aciForEntity.Raw = a
 
 		listAciFoeEntity = append(listAciFoeEntity, aciForEntity)
 	}
