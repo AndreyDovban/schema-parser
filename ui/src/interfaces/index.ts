@@ -47,3 +47,13 @@ export interface IAciForEntity {
 	targetattr: string[];
 	raw: string;
 }
+
+export interface IPermission {
+	cn: string[];
+	ipa_perm_bind_rule_type: string[];
+	ipa_perm_included_attr: string[];
+	ipa_perm_location: string[];
+	ipa_perm_right: string[];
+	ipa_perm_target: string[];
+	ipa_permission_type: string[];
+}

@@ -1,25 +1,25 @@
-import { DebouncedInput, Section } from '@/ui';
+import styles from './PermissionsTableSection.module.css';
 import cn from 'classnames';
-import styles from './OutBlockSection.module.css';
-import { type MouseEvent, useState, type DetailedHTMLProps, type HTMLAttributes } from 'react';
+import { Section, DebouncedInput } from '@/ui';
+import { type DetailedHTMLProps, type HTMLAttributes, type MouseEvent, useState } from 'react';
+import {
+	createColumnHelper,
+	flexRender,
+	type RowData,
+	getCoreRowModel,
+	getSortedRowModel,
+	type SortingState,
+	getFilteredRowModel,
+	useReactTable,
+	type ColumnFiltersState,
+	type Column,
+} from '@tanstack/react-table';
+import type { IPermission } from '@/interfaces';
 import Close from '@/assets/svg/close.svg?react';
 import Sort from '@/assets/svg/sort.svg?react';
 import SortDown from '@/assets/svg/sort-down.svg?react';
 import SortUp from '@/assets/svg/sort-up.svg?react';
-import { columnAciVisibleStore, listAciEntityStore } from '@/store';
-import type { IAciForEntity } from '@/interfaces';
-import {
-	createColumnHelper,
-	flexRender,
-	getCoreRowModel,
-	getFilteredRowModel,
-	getSortedRowModel,
-	useReactTable,
-	type Column,
-	type ColumnFiltersState,
-	type RowData,
-	type SortingState,
-} from '@tanstack/react-table';
+import { listPermissionsStore } from '@/store';
 
 interface OutBlockSectionProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	className?: string;
@@ -33,32 +33,12 @@ declare module '@tanstack/react-table' {
 	}
 }
 
-const defaultData: IAciForEntity[] = [];
-const columnHelper = createColumnHelper<IAciForEntity>();
+const defaultData: IPermission[] = [];
+const columnHelper = createColumnHelper<IPermission>();
 
 const columns = [
-	columnHelper.accessor('location', {
-		id: 'location',
-		header: () => 'Локация',
-		cell: info => info.renderValue(),
-		sortingFn: 'textCaseSensitive',
-		filterFn: 'includesString',
-	}),
-	columnHelper.accessor('acl', {
-		id: 'acl',
+	columnHelper.accessor('cn', {
 		header: () => 'Название',
-		cell: info => info.renderValue(),
-		sortingFn: 'textCaseSensitive',
-		filterFn: 'includesString',
-	}),
-	columnHelper.accessor('target', {
-		header: () => 'Целевой узел',
-		cell: info => info.renderValue(),
-		sortingFn: 'textCaseSensitive',
-		filterFn: 'includesString',
-	}),
-	columnHelper.accessor('allow', {
-		header: () => 'Предоставленные права',
 		cell: info => {
 			if (info.getValue()) {
 				return info.getValue().join('\n');
@@ -67,8 +47,8 @@ const columns = [
 		},
 		filterFn: 'includesString',
 	}),
-	columnHelper.accessor('targetattr', {
-		header: () => 'Действующие атрибуты',
+	columnHelper.accessor('ipa_perm_bind_rule_type', {
+		header: () => 'ipa_perm_bind_rule_type',
 		cell: info => {
 			if (info.getValue()) {
 				return info.getValue().join('\n');
@@ -77,16 +57,59 @@ const columns = [
 		},
 		filterFn: 'includesString',
 	}),
-	columnHelper.accessor('raw', {
-		id: 'raw',
-		header: () => 'Строка aci',
-		cell: info => info.renderValue(),
-		sortingFn: 'textCaseSensitive',
+	columnHelper.accessor('ipa_perm_included_attr', {
+		header: () => 'ipa_perm_included_attr',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('ipa_perm_location', {
+		header: () => 'ipa_perm_location',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('ipa_perm_right', {
+		header: () => 'ipa_perm_right',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('ipa_perm_target', {
+		header: () => 'ipa_perm_target',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('ipa_permission_type', {
+		header: () => 'ipa_permission_type',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
 		filterFn: 'includesString',
 	}),
 ];
 
-function Filter({ column }: { column: Column<IAciForEntity, unknown> }) {
+function Filter({ column }: { column: Column<IPermission, unknown> }) {
 	const columnFilterValue = column.getFilterValue();
 	const { filterVariant } = column.columnDef.meta ?? {};
 
@@ -111,41 +134,19 @@ function Filter({ column }: { column: Column<IAciForEntity, unknown> }) {
 	);
 }
 
-export function OutBlockSection({ className, ...props }: OutBlockSectionProps) {
-	const [columnOrder] = useState(['location', 'acl', 'allow', 'target', 'targetattr']);
+export function PermissionsTableSection({ className, ...props }: OutBlockSectionProps) {
+	const { listPermissions } = listPermissionsStore();
+	const [columnOrder] = useState(['cn']);
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const { listAciEntity } = listAciEntityStore();
-	const { columnAciVisible } = columnAciVisibleStore();
-
-	let initialColumnsAciVisible = {
-		location: true,
-		acl: true,
-		allow: true,
-		target: true,
-		targetattr: true,
-		raw: false,
-	};
-
-	if (columnAciVisible == 'raw') {
-		initialColumnsAciVisible = {
-			location: true,
-			acl: false,
-			allow: false,
-			target: false,
-			targetattr: false,
-			raw: true,
-		};
-	}
 
 	// Объект таблица
 	const table = useReactTable({
-		data: listAciEntity ? listAciEntity : defaultData,
+		data: listPermissions ? listPermissions : defaultData,
 		columns,
 		filterFns: {},
 		state: {
 			columnOrder,
-			columnVisibility: initialColumnsAciVisible,
 			columnFilters,
 			sorting,
 		},
@@ -157,18 +158,18 @@ export function OutBlockSection({ className, ...props }: OutBlockSectionProps) {
 	});
 
 	// Функция сброса фильтрации
-	function clearFilter(e: MouseEvent, column: Column<IAciForEntity, unknown>) {
+	function clearFilter(e: MouseEvent, column: Column<IPermission, unknown>) {
 		e.stopPropagation();
 		column.setFilterValue(undefined);
 	}
 
 	// Функция установки фильтра по клику на ячейку
-	// function setFilterByCell(column_id: string, value: string) {
-	// 	table.getColumn(column_id)?.setFilterValue(value);
-	// }
+	function setFilterByCell(column_id: string, value: string) {
+		table.getColumn(column_id)?.setFilterValue(value);
+	}
 
-	if (!listAciEntity.length) {
-		return <Section className={styles.error_message}>Данные aci не получены</Section>;
+	if (!listPermissions.length) {
+		return <Section className={styles.error_message}>Данные списка разрешений не получены</Section>;
 	}
 
 	return (
@@ -244,7 +245,7 @@ export function OutBlockSection({ className, ...props }: OutBlockSectionProps) {
 												title={typeof v != 'boolean' ? (v as string) : ''}
 												key={cell.id}
 												className={styles.td}
-												// onClick={() => setFilterByCell(cell.column.id, v as string)}
+												onClick={() => setFilterByCell(cell.column.id, v as string)}
 											>
 												{flexRender(cell.column.columnDef.cell, cell.getContext())}
 											</td>

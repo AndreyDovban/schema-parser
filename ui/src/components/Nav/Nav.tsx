@@ -6,6 +6,7 @@ import Attribute from '@/assets/svg/attribute.svg?react';
 import ObjectClass from '@/assets/svg/object_class.svg?react';
 import BuilerOject from '@/assets/svg/builder_object.svg?react';
 import FingerPrint from '@/assets/svg/fingerprint.svg?react';
+import Eye from '@/assets/svg/eye.svg?react';
 
 interface NavProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	className?: string;
@@ -51,6 +52,15 @@ export function Nav({ className, ...props }: NavProps) {
 				title="aci коструктор"
 			>
 				<FingerPrint />
+			</Link>
+			<Link
+				className={cn(styles.icon, {
+					[styles.active]: location.pathname == '/permissions',
+				})}
+				to="/permissions"
+				title="разрешения"
+			>
+				<Eye />
 			</Link>
 		</nav>
 	);

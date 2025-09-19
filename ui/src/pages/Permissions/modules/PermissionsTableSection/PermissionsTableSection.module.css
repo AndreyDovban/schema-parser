@@ -89,7 +89,7 @@
 	fill: var(--red);
 }
 
-.td {
+/* .td {
 	cursor: pointer;
 
 	overflow: hidden;
@@ -97,6 +97,20 @@
 	padding-inline: 10px;
 
 	vertical-align: top;
+
+	border: 1px solid var(--border-primary);
+} */
+
+.td {
+	cursor: pointer;
+
+	overflow: hidden;
+
+	max-width: 300px;
+	padding-inline: 10px;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
 
 	border: 1px solid var(--border-primary);
 }

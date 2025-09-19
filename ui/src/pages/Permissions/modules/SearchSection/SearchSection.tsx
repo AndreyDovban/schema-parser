@@ -5,27 +5,27 @@ import Search from '@/assets/svg/search.svg?react';
 // import Download from '@/assets/svg/download.svg?react';
 import { useEffect, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import { useRequest } from '@/hooks/useRequest';
-import { targetEntityForAciStore, listAciEntityStore } from '@/store';
-import type { IAciForEntity } from '@/interfaces';
+import { targetPermissionContainerStore, listPermissionsStore } from '@/store';
+import type { IPermission } from '@/interfaces';
 
 interface SearchSectionProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	className?: string;
 }
 
 export function SearchSection({ className, ...props }: SearchSectionProps) {
-	const { data, request } = useRequest<IAciForEntity[]>('/api/get_aci_for_entity');
-	const { targetEntityForAci, setTargetEntityForAci } = targetEntityForAciStore();
-	const { setListAciEntity } = listAciEntityStore();
+	const { data, request } = useRequest<IPermission[]>('/api/get_list_permissions');
+	const { targetPermissionContainer, setTargetPermissionContainer } = targetPermissionContainerStore();
+	const { setListPermissions } = listPermissionsStore();
 
 	function handlerSearch() {
-		if (targetEntityForAci) {
-			request({ method: 'POST', body: { baseDn: targetEntityForAci } });
+		if (targetPermissionContainer) {
+			request({ method: 'POST', body: { baseDn: targetPermissionContainer } });
 		}
 	}
 
 	useEffect(() => {
 		if (data) {
-			setListAciEntity(data);
+			setListPermissions(data);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
@@ -35,31 +35,18 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 			<input
 				placeholder="Search entity by distigushidName..."
 				type="text"
-				value={targetEntityForAci}
-				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetEntityForAci(e.target.value)}
+				value={targetPermissionContainer}
+				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetPermissionContainer(e.target.value)}
 			/>
 			<button
 				onClick={handlerSearch}
 				className={cn(styles.icon_button, {
-					[styles.off]: !targetEntityForAci,
+					[styles.off]: !targetPermissionContainer,
 				})}
 			>
 				<Search />
 			</button>
-			{/* <input
-				placeholder="Search entity by distigushidName..."
-				type="text"
-				value={targetEntity}
-				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetEntity(e.target.value)}
-			/>
-			<button
-				onClick={handlerSearch}
-				className={cn(styles.icon_button, {
-					[styles.off]: !targetEntity,
-				})}
-			>
-				<Search />
-			</button> */}
+
 			<span className={styles.grow}></span>
 		</Section>
 	);

@@ -1,8 +1,8 @@
-.aci_constructor_page {
+.permission_page {
 	display: grid;
 	grid-template-areas:
 		'search_block search_block'
-		'options_block out_block';
+		'out_block out_block';
 	grid-template-columns: auto 1fr;
 	grid-template-rows: auto 1fr;
 	gap: var(--s-2);
@@ -10,14 +10,9 @@
 	height: 100%;
 }
 
-/* блок для поиска объекта */
+/* блок для поиска контейнера с разрешениями */
 .search_block {
 	grid-area: search_block;
-}
-
-/* блок опций aci конструктора */
-.options_block {
-	grid-area: options_block;
 }
 
 /* блок вывода ответа */

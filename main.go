@@ -112,7 +112,18 @@ func main() {
 		c.BodyParser(&dn)
 		aci, err := connect.GetAciEntityByDn(conn, dn.BaseDn)
 		if err != nil {
-			fmt.Println("Get Entity By Dn Error", err.Error())
+			fmt.Println("Get Aci For Entity Error", err.Error())
+		}
+
+		return c.Status(fiber.StatusOK).JSON(aci)
+	})
+
+	app.Post("/api/get_list_permissions", func(c *fiber.Ctx) error {
+		var dn Entity
+		c.BodyParser(&dn)
+		aci, err := connect.GetListPermissions(conn, dn.BaseDn)
+		if err != nil {
+			fmt.Println("Get List Permissions Error", err.Error())
 		}
 
 		return c.Status(fiber.StatusOK).JSON(aci)
