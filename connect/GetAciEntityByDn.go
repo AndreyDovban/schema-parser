@@ -9,13 +9,15 @@ import (
 )
 
 type AciForEntity struct {
+	Version    string   `json:"version"`
+	Location   string   `json:"location"`
+	Acl        string   `json:"acl"`
 	Target     string   `json:"target"`
 	TargetAttr []string `json:"targetattr"`
-	Acl        string   `json:"acl"`
-	Version    string   `json:"version"`
 	Allow      []string `json:"allow"`
 	Raw        string   `json:"raw"`
-	Location   string   `json:"location"`
+	GroupDn    string   `json:"groupdn"`
+	UserDn     []string `json:"userdn"`
 }
 
 func GetAciEntityByDn(conn *ldap.Conn, baseDN string) (any, error) {
@@ -81,12 +83,26 @@ func GetAciEntityByDn(conn *ldap.Conn, baseDN string) (any, error) {
 			aciForEntity.Acl = matchedAclString[1]
 		}
 
-		// Поиск версии allow ( предоставленные права )
+		// Поиск allow ( предоставленные права )
 		reAllow := regexp.MustCompile(`allow[\s]?\((.*?)\)`)
 		matchedAllowString := reAllow.FindStringSubmatch(a)
 		if len(matchedAllowString) > 0 {
 			str := strings.ReplaceAll(matchedAllowString[1], " ", "")
 			aciForEntity.Allow = strings.Split(str, ",")
+		}
+		// Поиск groupdn ( определени группового доступа )
+		reGroupDn := regexp.MustCompile(`groupdn[\s]?=[\s]?"(.*?)"`)
+		matchedGroupDnString := reGroupDn.FindStringSubmatch(a)
+		if len(matchedGroupDnString) > 0 {
+			aciForEntity.GroupDn = matchedGroupDnString[1]
+		}
+
+		// Поиск userdn ( определение пользовательского доступа )
+		reUSerDn := regexp.MustCompile(`groupdn[\s]?=[\s]?"(.*?)"`)
+		matchedUserDnString := reUSerDn.FindStringSubmatch(a)
+		if len(matchedUserDnString) > 0 {
+			str := strings.ReplaceAll(matchedUserDnString[1], " ", "")
+			aciForEntity.UserDn = strings.Split(str, "||")
 		}
 
 		// Добавление сырых данных

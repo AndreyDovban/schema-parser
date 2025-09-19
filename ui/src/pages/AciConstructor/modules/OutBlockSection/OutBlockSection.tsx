@@ -77,6 +77,22 @@ const columns = [
 		},
 		filterFn: 'includesString',
 	}),
+	columnHelper.accessor('groupdn', {
+		header: () => 'Определение группового доступа',
+		cell: info => info.renderValue(),
+		sortingFn: 'textCaseSensitive',
+		filterFn: 'includesString',
+	}),
+	columnHelper.accessor('userdn', {
+		header: () => 'Определение пользовательского',
+		cell: info => {
+			if (info.getValue()) {
+				return info.getValue().join('\n');
+			}
+			return info.getValue();
+		},
+		filterFn: 'includesString',
+	}),
 	columnHelper.accessor('raw', {
 		id: 'raw',
 		header: () => 'Строка aci',
@@ -112,11 +128,17 @@ function Filter({ column }: { column: Column<IAciForEntity, unknown> }) {
 }
 
 export function OutBlockSection({ className, ...props }: OutBlockSectionProps) {
-	const [columnOrder] = useState(['location', 'acl', 'allow', 'target', 'targetattr']);
+	const [columnOrder] = useState(['location', 'acl', 'target', 'targetattr', 'allow']);
 	const [sorting, setSorting] = useState<SortingState>([]); // Внутреннее состояние компонента объект сортиовка
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	// const {} = listPermissionsStore();
 	const { listAciEntity } = listAciEntityStore();
 	const { columnAciVisible } = columnAciVisibleStore();
+
+	// const listPermissionsNames = listPermissions.reduce((acc: string[], el) => {
+	// 	acc.push(el.cn[0]);
+	// 	return acc;
+	// }, []);
 
 	let initialColumnsAciVisible = {
 		location: true,
@@ -239,11 +261,15 @@ export function OutBlockSection({ className, ...props }: OutBlockSectionProps) {
 								<tr key={row.id} className={styles.tr}>
 									{row.getVisibleCells().map(cell => {
 										const v = cell.getValue();
+
 										return (
 											<td
 												title={typeof v != 'boolean' ? (v as string) : ''}
 												key={cell.id}
-												className={styles.td}
+												className={cn(styles.td, {
+													// [styles.empty]: cell.column.id == 'acl',
+													// && !listPermissionsNames.includes(cell.getValue() as string),
+												})}
 												// onClick={() => setFilterByCell(cell.column.id, v as string)}
 											>
 												{flexRender(cell.column.columnDef.cell, cell.getContext())}

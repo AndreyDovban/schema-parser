@@ -46,6 +46,8 @@ export interface IAciForEntity {
 	target: string;
 	targetattr: string[];
 	raw: string;
+	groupdn: string;
+	userdn: string[];
 }
 
 export interface IPermission {

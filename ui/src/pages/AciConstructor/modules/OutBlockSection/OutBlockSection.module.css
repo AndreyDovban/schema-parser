@@ -108,3 +108,7 @@
 .hide {
 	display: none;
 }
+
+.empty {
+	background: rgb(156 112 0);
+}
