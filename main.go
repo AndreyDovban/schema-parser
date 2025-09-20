@@ -31,6 +31,11 @@ type Entity struct {
 	BaseDn string `json:"baseDn"`
 }
 
+type ObjectForCheckRights struct {
+	BaseDn                string `json:"baseDn"`
+	ObjectsForCheckRights string `json:"objectsForCheckRights"`
+}
+
 func main() {
 	// config := configs.LoadConfig()
 
@@ -127,6 +132,19 @@ func main() {
 		}
 
 		return c.Status(fiber.StatusOK).JSON(aci)
+	})
+
+	app.Post("/api/get_effective_rights", func(c *fiber.Ctx) error {
+		var object ObjectForCheckRights
+		c.BodyParser(&object)
+		// aci, err := connect.GetListPermissions(conn, object.BaseDn)
+		// if err != nil {
+		// 	fmt.Println("Get List Permissions Error", err.Error())
+		// }
+
+		fmt.Println(object.BaseDn, object.ObjectsForCheckRights)
+
+		return c.Status(fiber.StatusOK).JSON("work")
 	})
 
 	// app.Get("/api/close", func(c *fiber.Ctx) error {

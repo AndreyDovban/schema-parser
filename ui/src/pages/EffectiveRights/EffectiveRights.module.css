@@ -1,4 +1,4 @@
-.permission_page {
+.effective_rights_page {
 	display: grid;
 	grid-template-areas:
 		'search_block'
@@ -10,7 +10,7 @@
 	height: 100%;
 }
 
-/* блок для поиска контейнера с разрешениями */
+/* блок для поиска контейнера с проверкой прав */
 .search_block {
 	grid-area: search_block;
 }

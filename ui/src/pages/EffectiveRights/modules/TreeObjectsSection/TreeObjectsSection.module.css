@@ -1,0 +1,13 @@
+/* блок показа информации об атрибуте */
+.tree_section {
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-1);
+
+	min-width: 300px;
+	padding: var(--s-4);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}

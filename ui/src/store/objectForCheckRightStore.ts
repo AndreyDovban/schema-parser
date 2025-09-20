@@ -1,0 +1,19 @@
+import { create } from 'zustand';
+
+interface IObjectForCheckRightStore {
+	objectForCheckRights: string;
+	setObjectForCheckRights: (th: string) => void;
+}
+
+const initial = 'cn=permissions,cn=pbac,dc=granulex,dc=test';
+
+// Атом состояния - dn объекта для которого показать еффективные права доступа
+export const objectForCheckRightStore = create<IObjectForCheckRightStore>(set => {
+	return {
+		objectForCheckRights: initial,
+		setObjectForCheckRights: (th: string) =>
+			set(() => {
+				return { objectForCheckRights: th };
+			}),
+	};
+});

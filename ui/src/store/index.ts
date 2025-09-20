@@ -12,3 +12,6 @@ export * from './listAciEntityStore';
 export * from './columnAciVisibleStore';
 export * from './listPermissionsStore';
 export * from './targetPermissionContainerStore';
+export * from './nodeForCheckRightsStore';
+export * from './objectForCheckRightStore';
+export * from './outDataForCheckRightStore';
