@@ -5,7 +5,7 @@ interface INodeForCheckRightsStore {
 	setNodeForCheckRights: (th: string) => void;
 }
 
-const initial = 'cn=custom,dc=granulex,dc=test';
+const initial = '';
 
 // Атом состояния - dn узла каталога от которого начинать проверку прав
 export const nodeForCheckRightsStore = create<INodeForCheckRightsStore>(set => {

@@ -5,7 +5,7 @@ interface ITargetEntityForAciStore {
 	setTargetEntityForAci: (th: string) => void;
 }
 
-const initial = 'dc=granulex,dc=test';
+const initial = '';
 
 // Атом состояния - dn объекта для поиска и использования в конструкторе aci
 export const targetEntityForAciStore = create<ITargetEntityForAciStore>(set => {

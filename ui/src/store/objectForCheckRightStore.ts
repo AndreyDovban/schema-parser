@@ -5,7 +5,7 @@ interface IObjectForCheckRightStore {
 	setObjectForCheckRights: (th: string) => void;
 }
 
-const initial = 'cn=permissions,cn=pbac,dc=granulex,dc=test';
+const initial = '';
 
 // Атом состояния - dn объекта для которого показать еффективные права доступа
 export const objectForCheckRightStore = create<IObjectForCheckRightStore>(set => {

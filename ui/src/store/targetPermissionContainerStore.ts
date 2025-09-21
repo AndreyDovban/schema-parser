@@ -5,7 +5,7 @@ interface ITargetPermissionContainerStore {
 	setTargetPermissionContainer: (th: string) => void;
 }
 
-const initial = 'cn=permissions,cn=pbac,dc=granulex,dc=test';
+const initial = '';
 
 // Атом состояния - dn объекта контейнера с разрешениями
 export const targetPermissionContainerStore = create<ITargetPermissionContainerStore>(set => {

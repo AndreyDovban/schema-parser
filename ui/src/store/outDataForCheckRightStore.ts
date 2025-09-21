@@ -5,7 +5,7 @@ interface IOutDataForCheckRightStore {
 	setOutDataForCheckRights: (th: string) => void;
 }
 
-const initial = 'cn=permissions,cn=pbac,dc=granulex,dc=test';
+const initial = '';
 
 // Атом состояния - данные для показа эффективных прав доступа
 export const outDataForCheckRightStore = create<IOutDataForCheckRightStore>(set => {
