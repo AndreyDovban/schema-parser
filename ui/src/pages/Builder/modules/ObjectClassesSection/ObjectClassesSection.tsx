@@ -84,7 +84,7 @@ export function ObjectClassesSection({ className, ...props }: ObjectClassesSecti
 
 	function getAllSupers(name: string): string[] {
 		const result: string[] = [];
-		if (hashObjects[name]['SUP']) {
+		if (hashObjects[name] && hashObjects[name]['SUP']) {
 			result.push(hashObjects[name]['SUP'], ...getAllSupers(hashObjects[name]['SUP']));
 		}
 
