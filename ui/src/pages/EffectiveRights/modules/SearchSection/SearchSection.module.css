@@ -1,8 +1,6 @@
 .search_block {
 	display: flex;
-	gap: var(--s-2);
-	align-items: center;
-	justify-content: space-between;
+	gap: var(--s-4);
 
 	padding: var(--s-2);
 
@@ -40,8 +38,8 @@
 .icon_button svg {
 	pointer-events: none;
 
-	width: 20px;
-	height: 20px;
+	width: 24px;
+	height: 24px;
 
 	font: inherit;
 
@@ -55,4 +53,8 @@
 .off {
 	pointer-events: none;
 	opacity: 0.2;
+}
+
+.active svg {
+	fill: #00f200;
 }

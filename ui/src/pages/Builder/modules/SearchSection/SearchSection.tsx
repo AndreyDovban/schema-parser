@@ -108,6 +108,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetEntity(e.target.value)}
 			/>
 			<button
+				title="просмотр объект классов выбранной записи"
 				onClick={handlerSearch}
 				className={cn(styles.icon_button, {
 					[styles.off]: !targetEntity,
@@ -117,6 +118,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 			</button>
 			<span className={styles.grow}></span>
 			<button
+				title="скачать файл с возможными атрибутами найденной записи"
 				onClick={handlerDownload}
 				className={cn(styles.icon_button, {
 					[styles.off]: !targetEntity,

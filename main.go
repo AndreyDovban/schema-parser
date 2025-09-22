@@ -34,6 +34,7 @@ type Entity struct {
 type ObjectForCheckRights struct {
 	BaseDn                string `json:"baseDn"`
 	ObjectsForCheckRights string `json:"objectsForCheckRights"`
+	ScopeForCheckRights   bool   `json:"scopeForCheckRights"`
 }
 
 func main() {
@@ -137,7 +138,7 @@ func main() {
 	app.Post("/api/get_effective_rights", func(c *fiber.Ctx) error {
 		var object ObjectForCheckRights
 		c.BodyParser(&object)
-		result, err := connect.GetEffectiveRight(conn, object.BaseDn, object.ObjectsForCheckRights)
+		result, err := connect.GetEffectiveRight(conn, object.BaseDn, object.ObjectsForCheckRights, object.ScopeForCheckRights)
 		if err != nil {
 			fmt.Println("Get List Permissions Error", err.Error())
 		}

@@ -39,6 +39,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetEntityForAci(e.target.value)}
 			/>
 			<button
+				title="просмотр aci по выбранной записи"
 				onClick={handlerSearch}
 				className={cn(styles.icon_button, {
 					[styles.off]: !targetEntityForAci,
@@ -46,20 +47,6 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 			>
 				<Search />
 			</button>
-			{/* <input
-				placeholder="Search entity by distigushidName..."
-				type="text"
-				value={targetEntity}
-				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetEntity(e.target.value)}
-			/>
-			<button
-				onClick={handlerSearch}
-				className={cn(styles.icon_button, {
-					[styles.off]: !targetEntity,
-				})}
-			>
-				<Search />
-			</button> */}
 			<span className={styles.grow}></span>
 		</Section>
 	);

@@ -8,6 +8,7 @@ export * from './aci_permissions/listPermissionsStore';
 export * from './effective_right/nodeForCheckRightsStore';
 export * from './effective_right/objectForCheckRightStore';
 export * from './effective_right/outDataForCheckRightStore';
+export * from './effective_right/scopeForCheckRightsStore';
 export * from './schema/choosedObjectClassesStore';
 export * from './schema/namesAttributesStore';
 export * from './schema/requiredAttrsStore';

@@ -11,3 +11,96 @@
 	background: var(--background-secondary);
 	border: 1px solid var(--border-secondary);
 }
+
+/* блок для отрисовки объектов в виде ерева */
+.tree {
+	padding-block: 1rem;
+	font-weight: 500;
+	color: var(--text);
+}
+
+/* блок директория */
+.dir {
+	cursor: pointer;
+
+	position: relative;
+
+	padding: 0.1rem;
+	padding-left: 2rem;
+
+	font-weight: 500;
+}
+
+/* элемент отрисовки ветки дерева */
+.dir::before {
+	content: '';
+
+	position: absolute;
+	top: -5001.3rem;
+	left: 1rem;
+
+	width: 1rem;
+	height: 5002rem;
+
+	border-bottom: 1px solid rgb(128 128 128);
+	border-left: 1px solid rgb(128 128 128);
+	border-bottom-left-radius: 3px;
+}
+
+/* блок для названия объекта */
+.lab {
+	position: relative;
+	display: flex;
+	gap: 0.2rem;
+	min-height: 1.2rem;
+}
+
+/* блок для скрываемого содержимого контейнера */
+.content {
+	overflow: hidden;
+}
+
+/* эффект наведения для лэйюэла директории */
+.lab:hover {
+	cursor: pointer;
+	color: var(--hover);
+}
+
+/* эффект активность для лэйбла директории */
+.lab:active {
+	color: var(--active);
+	fill: var(--active);
+}
+
+/* эффект наведения для иконок лэйбэла директории */
+.lab:hover .icontree {
+	fill: var(--hover);
+}
+
+/* эффект активность для иконок лэйбэла директории */
+.lab:active .icontree {
+	fill: var(--active);
+}
+
+/* стиль  для скрытия иконок "папки" */
+.close {
+	display: none;
+}
+
+/* класс обозначения изменённых объектов */
+.change {
+	color: var(--green);
+}
+
+/* блок в футере таблици для расположения иконок */
+.structure {
+	position: relative;
+	padding-top: 0.7rem;
+	padding-right: 0.5rem;
+	text-align: end;
+}
+
+/* стиль для скрытия контента */
+.hide ~ div {
+	display: none;
+}

@@ -7,18 +7,29 @@ import (
 )
 
 type EffectiveRight struct {
-	Dn                   string
-	EntryLevelRights     string
-	AttributeLevelRights []string
+	Dn                   string   `json:"dn"`
+	EntryLevelRights     string   `json:"entry_level_rights"`
+	AttributeLevelRights []string `json:"attribute_level_rights"`
 }
 
-func GetEffectiveRight(conn *ldap.Conn, baseDN string, ObjectsForCheckRights string) (any, error) {
+func GetEffectiveRight(
+	conn *ldap.Conn,
+	baseDN string,
+	ObjectsForCheckRights string,
+	ScopeForCheckRights bool,
+) (any, error) {
 
 	reqControl := ldap.NewControlString("1.3.6.1.4.1.42.2.27.9.5.2", true, "dn:"+ObjectsForCheckRights)
 
+	scope := ldap.ScopeBaseObject
+	if ScopeForCheckRights {
+		scope = ldap.ScopeWholeSubtree
+	}
+
 	searchRequest := ldap.NewSearchRequest(
 		baseDN,
-		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 0, 0, false,
+		scope,
+		ldap.NeverDerefAliases, 0, 0, false,
 		"(objectClass=*)", []string{"*"}, []ldap.Control{reqControl},
 	)
 

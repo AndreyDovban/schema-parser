@@ -64,4 +64,6 @@ export interface IEffectiveRight {
 	dn: string;
 	entry_level_rights: string;
 	attribute_level_rights: string[];
+	hashIndex: string[];
+	open: false;
 }

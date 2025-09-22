@@ -39,6 +39,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 				onInput={(e: ChangeEvent<HTMLInputElement>) => setTargetPermissionContainer(e.target.value)}
 			/>
 			<button
+				title="просмотр записей в контейнере привилегий"
 				onClick={handlerSearch}
 				className={cn(styles.icon_button, {
 					[styles.off]: !targetPermissionContainer,
