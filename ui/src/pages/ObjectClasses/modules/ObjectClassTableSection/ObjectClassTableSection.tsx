@@ -18,7 +18,7 @@ import Close from '@/assets/svg/close.svg?react';
 import Sort from '@/assets/svg/sort.svg?react';
 import SortDown from '@/assets/svg/sort-down.svg?react';
 import SortUp from '@/assets/svg/sort-up.svg?react';
-import { useSchemaStore } from '@/store/useSchemaStore';
+import { useSchemaStore } from '@/store/schema/useSchemaStore';
 
 declare module '@tanstack/react-table' {
 	//allows us to define custom properties for our columns
