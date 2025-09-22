@@ -5,13 +5,14 @@ import Search from '@/assets/svg/search.svg?react';
 import { useEffect, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import { useRequest } from '@/hooks/useRequest';
 import { nodeForCheckRightsStore, objectForCheckRightStore, outDataForCheckRightStore } from '@/store';
+import type { IEffectiveRight } from '@/interfaces';
 
 interface SearchSectionProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	className?: string;
 }
 
 export function SearchSection({ className, ...props }: SearchSectionProps) {
-	const { data, request } = useRequest<string>('/api/get_effective_rights');
+	const { data, request } = useRequest<IEffectiveRight[]>('/api/get_effective_rights');
 	const { nodeForCkeckRights, setNodeForCheckRights } = nodeForCheckRightsStore();
 	const { objectForCheckRights, setObjectForCheckRights } = objectForCheckRightStore();
 	const { setOutDataForCheckRights } = outDataForCheckRightStore();

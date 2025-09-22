@@ -59,3 +59,9 @@ export interface IPermission {
 	ipa_perm_target: string[];
 	ipa_permission_type: string[];
 }
+
+export interface IEffectiveRight {
+	dn: string;
+	entry_level_rights: string;
+	attribute_level_rights: string[];
+}

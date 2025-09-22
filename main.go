@@ -137,14 +137,12 @@ func main() {
 	app.Post("/api/get_effective_rights", func(c *fiber.Ctx) error {
 		var object ObjectForCheckRights
 		c.BodyParser(&object)
-		// aci, err := connect.GetListPermissions(conn, object.BaseDn)
-		// if err != nil {
-		// 	fmt.Println("Get List Permissions Error", err.Error())
-		// }
+		result, err := connect.GetEffectiveRight(conn, object.BaseDn, object.ObjectsForCheckRights)
+		if err != nil {
+			fmt.Println("Get List Permissions Error", err.Error())
+		}
 
-		fmt.Println(object.BaseDn, object.ObjectsForCheckRights)
-
-		return c.Status(fiber.StatusOK).JSON("work")
+		return c.Status(fiber.StatusOK).JSON(result)
 	})
 
 	// app.Get("/api/close", func(c *fiber.Ctx) error {

@@ -1,17 +1,18 @@
 import { create } from 'zustand';
+import type { IEffectiveRight } from '@/interfaces';
 
 interface IOutDataForCheckRightStore {
-	outDataForCheckRights: string;
-	setOutDataForCheckRights: (th: string) => void;
+	outDataForCheckRights: IEffectiveRight[];
+	setOutDataForCheckRights: (th: IEffectiveRight[]) => void;
 }
 
-const initial = '';
+const initial: IEffectiveRight[] = [];
 
 // Атом состояния - данные для показа эффективных прав доступа
 export const outDataForCheckRightStore = create<IOutDataForCheckRightStore>(set => {
 	return {
 		outDataForCheckRights: initial,
-		setOutDataForCheckRights: (th: string) =>
+		setOutDataForCheckRights: (th: IEffectiveRight[]) =>
 			set(() => {
 				return { outDataForCheckRights: th };
 			}),
