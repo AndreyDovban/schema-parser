@@ -79,6 +79,6 @@ export type IEff = {
 	dn: string;
 	entry_level_rights: string;
 	attribute_level_rights: { name: string; value: string }[];
-	open?: boolean;
+	open: boolean;
 	hashIndex: string[];
 };

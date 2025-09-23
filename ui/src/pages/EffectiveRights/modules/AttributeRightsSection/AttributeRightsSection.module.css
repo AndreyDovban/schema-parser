@@ -1,0 +1,31 @@
+/* блок показа информации о правах на атрибуты в выбранной записи */
+.target_attribute_rights_section {
+	overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-4);
+
+	min-width: 300px;
+	padding: var(--s-4);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}
+
+.dn_block {
+	overflow-x: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	min-height: 24px;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.wrap {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--s-2);
+}

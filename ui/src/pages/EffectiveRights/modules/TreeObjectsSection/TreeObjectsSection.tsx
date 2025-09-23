@@ -54,7 +54,9 @@ export function TreeObjectsSection({ className, ...props }: TreeObjectsSectionPr
 										})}
 									>
 										<button
-											className={cn(styles.button_icon)}
+											className={cn(styles.button_icon, {
+												[styles.is_node]: Object.keys(value).length < 6,
+											})}
 											onClick={e => openFolder(e, value.hashIndex)}
 										>
 											{value.open === true ? (
@@ -64,7 +66,13 @@ export function TreeObjectsSection({ className, ...props }: TreeObjectsSectionPr
 											)}
 										</button>
 										<span onClick={e => chooseEntry(e, value)}>{key}</span>
-										{<ColeredPermission className={styles.elr} rights={value.entry_level_rights} />}
+										{
+											<ColeredPermission
+												onClick={e => chooseEntry(e, value)}
+												className={styles.elr}
+												rights={value.entry_level_rights}
+											/>
+										}
 									</span>
 									{drawTree(value)}
 								</div>

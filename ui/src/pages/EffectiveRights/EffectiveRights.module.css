@@ -1,9 +1,9 @@
 .effective_rights_page {
 	display: grid;
 	grid-template-areas:
-		'search_block'
-		'out_block';
-	grid-template-columns: 1fr;
+		'search_block search_block'
+		'tree_block attribute_right_block';
+	grid-template-columns: 1fr minmax(300px, 400px);
 	grid-template-rows: auto 1fr;
 	gap: var(--s-2);
 
@@ -16,6 +16,11 @@
 }
 
 /* блок вывода ответа */
-.out_block {
-	grid-area: out_block;
+.tree_block {
+	grid-area: tree_block;
+}
+
+/* блок вывода ответа */
+.attribute_right_block {
+	grid-area: attribute_right_block;
 }

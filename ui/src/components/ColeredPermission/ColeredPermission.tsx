@@ -16,12 +16,12 @@ export function ColeredPermission({ className, rights, ...props }: ColeredPermis
 				return (
 					<span
 						key={i}
-						className={cn({
-							[styles.a]: el == 'a',
-							[styles.d]: el == 'd',
-							[styles.n]: el == 'n',
-							[styles.v]: el == 'v',
-						})}
+						// className={cn({
+						// 	[styles.a]: el == 'a',
+						// 	[styles.d]: el == 'd',
+						// 	[styles.n]: el == 'n',
+						// 	[styles.v]: el == 'v',
+						// })}
 					>
 						{el}
 					</span>
