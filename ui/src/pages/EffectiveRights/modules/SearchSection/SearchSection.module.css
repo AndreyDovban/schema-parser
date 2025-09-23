@@ -56,5 +56,5 @@
 }
 
 .active svg {
-	fill: #00f200;
+	fill: var(--green);
 }

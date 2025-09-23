@@ -1,12 +1,7 @@
-export interface IEff {
-	dn: string;
-	entry_level_rights: string;
-	open: boolean;
-	hashIndex: string[];
-}
+import type { IEff, IEffectiveRight } from '@/interfaces';
 
-export function buildTree(objects: IEff[]) {
-	const tree: Record<string, IEff> = {};
+export function buildTree(objects: IEffectiveRight[]) {
+	const tree: IEff = { dn: '', open: false, entry_level_rights: '', hashIndex: [] };
 
 	objects.forEach(obj => {
 		let arr = obj.dn.split(',');
@@ -14,7 +9,7 @@ export function buildTree(objects: IEff[]) {
 		let dc = '';
 
 		arr = arr.filter(el => {
-			if (/dc=/.test(el)) {
+			if (/dc=/.test(el) || /DC=/.test(el)) {
 				dc += `${el},`;
 				return false;
 			} else {
@@ -40,14 +35,15 @@ export function buildTree(objects: IEff[]) {
 					};
 				} else {
 					currentNode[arr[i]] = {
-						entry_level_rights: '???',
+						dn: '',
+						entry_level_rights: '',
 						open: false,
 						hashIndex: arr.slice(0, i + 1),
 					};
 				}
 			}
 
-			currentNode = currentNode[arr[i]];
+			currentNode = currentNode[arr[i]] as IEff;
 		}
 	});
 

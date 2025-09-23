@@ -5,11 +5,12 @@ import Search from '@/assets/svg/search.svg?react';
 import Tree from '@/assets/svg/tree.svg?react';
 import { useEffect, type ChangeEvent, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import { useRequest } from '@/hooks/useRequest';
+import { buildTree } from '@/helpers';
 import {
 	nodeForCheckRightsStore,
 	objectForCheckRightStore,
-	outDataForCheckRightStore,
 	scopeForCheckRightsStore,
+	treeDataForCheckRightsStore,
 } from '@/store';
 import type { IEffectiveRight } from '@/interfaces';
 
@@ -21,7 +22,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 	const { data, request } = useRequest<IEffectiveRight[]>('/api/get_effective_rights');
 	const { nodeForCkeckRights, setNodeForCheckRights } = nodeForCheckRightsStore();
 	const { objectForCheckRights, setObjectForCheckRights } = objectForCheckRightStore();
-	const { setOutDataForCheckRights } = outDataForCheckRightStore();
+	const { setTreeDataForCheckRights } = treeDataForCheckRightsStore();
 	const { scopeForCheckRights, setScopeForCheckRights } = scopeForCheckRightsStore();
 
 	function handlerSearch() {
@@ -37,7 +38,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 
 	useEffect(() => {
 		if (data) {
-			setOutDataForCheckRights(data);
+			setTreeDataForCheckRights(buildTree(data));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);

@@ -59,7 +59,7 @@
 }
 
 .is_authorized svg {
-	fill: #00f200;
+	fill: var(--green);
 }
 
 .off svg {

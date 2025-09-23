@@ -1,0 +1,21 @@
+.rights {
+	display: flex;
+	gap: var(--s-1);
+	align-items: center;
+}
+
+.a {
+	color: var(--green);
+}
+
+.d {
+	color: var(--red);
+}
+
+.n {
+	color: var(--blue);
+}
+
+.v {
+	color: var(--yellow);
+}

@@ -1,6 +1,6 @@
 /* блок показа информации об атрибуте */
 .tree_section {
-	overflow-y: auto;
+	overflow-y: scroll;
 	display: flex;
 	flex-direction: column;
 	gap: var(--s-1);
@@ -10,13 +10,6 @@
 
 	background: var(--background-secondary);
 	border: 1px solid var(--border-secondary);
-}
-
-/* блок для отрисовки объектов в виде ерева */
-.tree {
-	padding-block: 1rem;
-	font-weight: 500;
-	color: var(--text);
 }
 
 /* блок директория */
@@ -51,7 +44,7 @@
 .lab {
 	position: relative;
 	display: flex;
-	gap: 0.2rem;
+	gap: 1rem;
 	min-height: 1.2rem;
 }
 
@@ -63,23 +56,23 @@
 /* эффект наведения для лэйюэла директории */
 .lab:hover {
 	cursor: pointer;
-	color: var(--hover);
+	color: var(--green);
 }
 
 /* эффект активность для лэйбла директории */
 .lab:active {
-	color: var(--active);
-	fill: var(--active);
+	color: var(--green);
+	fill: var(--green);
 }
 
 /* эффект наведения для иконок лэйбэла директории */
 .lab:hover .icontree {
-	fill: var(--hover);
+	fill: var(--green);
 }
 
 /* эффект активность для иконок лэйбэла директории */
 .lab:active .icontree {
-	fill: var(--active);
+	fill: var(--green);
 }
 
 /* стиль  для скрытия иконок "папки" */
@@ -87,20 +80,18 @@
 	display: none;
 }
 
-/* класс обозначения изменённых объектов */
-.change {
-	color: var(--green);
-}
-
-/* блок в футере таблици для расположения иконок */
-.structure {
-	position: relative;
-	padding-top: 0.7rem;
-	padding-right: 0.5rem;
-	text-align: end;
-}
-
 /* стиль для скрытия контента */
 .hide ~ div {
 	display: none;
+}
+
+/* стиль для обозначения непросмотренных записей */
+.not_show {
+	color: var(--text-secondary);
+	fill: var(--text-secondary);
+}
+
+/* стиль для обозначения EntryLevelRights  */
+.elr {
+	text-decoration: underline;
 }

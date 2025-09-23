@@ -67,3 +67,12 @@ export interface IEffectiveRight {
 	hashIndex: string[];
 	open: false;
 }
+
+export type IEff = {
+	[key: string]: string | string[] | boolean | IEff | undefined;
+
+	dn: string;
+	entry_level_rights: string;
+	open: boolean;
+	hashIndex: string[];
+};
