@@ -10,6 +10,7 @@ export * from './effective_right/objectForCheckRightStore';
 export * from './effective_right/listDataForCheckRightStore';
 export * from './effective_right/scopeForCheckRightsStore';
 export * from './effective_right/treeDataForCheckRightsStore';
+export * from './effective_right/targetEntryForCheckRightsStore';
 export * from './schema/choosedObjectClassesStore';
 export * from './schema/namesAttributesStore';
 export * from './schema/requiredAttrsStore';

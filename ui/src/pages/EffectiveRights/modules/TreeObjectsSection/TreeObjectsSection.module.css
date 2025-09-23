@@ -44,8 +44,26 @@
 .lab {
 	position: relative;
 	display: flex;
-	gap: 1rem;
+	gap: 0.2rem;
 	min-height: 1.2rem;
+}
+
+/* кнокпка с иконкой */
+.button_icon {
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: none;
+	border: none;
+}
+
+.button_icon svg {
+	width: 20px;
+	height: 20px;
+	fill: var(--text-secondary);
 }
 
 /* блок для скрываемого содержимого контейнера */
@@ -85,6 +103,20 @@
 	display: none;
 }
 
+/* стиль для кнопок с иконками в контейнерах */
+.is_node {
+	display: none;
+}
+
+/* стиль для выбранного объекта */
+.target {
+	color: var(--green);
+}
+
+.target svg {
+	fill: var(--green);
+}
+
 /* стиль для обозначения непросмотренных записей */
 .not_show {
 	color: var(--text-secondary);
@@ -93,5 +125,5 @@
 
 /* стиль для обозначения EntryLevelRights  */
 .elr {
-	text-decoration: underline;
+	margin-left: 1rem;
 }

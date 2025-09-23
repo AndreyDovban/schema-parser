@@ -1,7 +1,7 @@
 import type { IEff, IEffectiveRight } from '@/interfaces';
 
 export function buildTree(objects: IEffectiveRight[]) {
-	const tree: IEff = { dn: '', open: false, entry_level_rights: '', hashIndex: [] };
+	const tree: IEff = { dn: '', open: false, entry_level_rights: '', hashIndex: [], attribute_level_rights: [] };
 
 	objects.forEach(obj => {
 		let arr = obj.dn.split(',');
@@ -30,6 +30,7 @@ export function buildTree(objects: IEffectiveRight[]) {
 					currentNode[arr[i]] = {
 						dn: obj.dn,
 						entry_level_rights: obj.entry_level_rights,
+						attribute_level_rights: obj.attribute_level_rights,
 						open: false,
 						hashIndex: arr.slice(0, i + 1),
 					};
@@ -37,6 +38,7 @@ export function buildTree(objects: IEffectiveRight[]) {
 					currentNode[arr[i]] = {
 						dn: '',
 						entry_level_rights: '',
+						attribute_level_rights: [],
 						open: false,
 						hashIndex: arr.slice(0, i + 1),
 					};

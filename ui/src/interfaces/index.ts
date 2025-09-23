@@ -63,16 +63,22 @@ export interface IPermission {
 export interface IEffectiveRight {
 	dn: string;
 	entry_level_rights: string;
-	attribute_level_rights: string[];
+	attribute_level_rights: { name: string; value: string }[];
 	hashIndex: string[];
 	open: false;
 }
 
+export interface ITargetEntryForER {
+	dn: string;
+	attribute_level_rights: { name: string; value: string }[];
+}
+
 export type IEff = {
-	[key: string]: string | string[] | boolean | IEff | undefined;
+	[key: string]: string | string[] | boolean | IEff | { name: string; value: string }[] | undefined;
 
 	dn: string;
 	entry_level_rights: string;
-	open: boolean;
+	attribute_level_rights: { name: string; value: string }[];
+	open?: boolean;
 	hashIndex: string[];
 };

@@ -2,10 +2,11 @@ import cn from 'classnames';
 import styles from './TreeObjectsSection.module.css';
 import { type DetailedHTMLProps, type HTMLAttributes, type MouseEvent } from 'react';
 import { Section } from '@/ui';
-import { treeDataForCheckRightsStore } from '@/store';
-
+import { treeDataForCheckRightsStore, targetEntryForCheckRightsStore } from '@/store';
 import type { IEff } from '@/interfaces';
 import { ColeredPermission } from '@/components';
+import Folder from '@/assets/svg/folder.svg?react';
+import OpenFolder from '@/assets/svg/open_folder.svg?react';
 
 interface TreeObjectsSectionProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	className?: string;
@@ -13,6 +14,7 @@ interface TreeObjectsSectionProps extends DetailedHTMLProps<HTMLAttributes<HTMLE
 
 export function TreeObjectsSection({ className, ...props }: TreeObjectsSectionProps) {
 	const { treeDataForCheckRights, setTreeDataForCheckRights } = treeDataForCheckRightsStore();
+	const { targetEntryForCheckRights, setTargetEntryForCheckRights } = targetEntryForCheckRightsStore();
 
 	function openFolder(e: MouseEvent, hashIndex: string[]) {
 		e.stopPropagation();
@@ -26,6 +28,11 @@ export function TreeObjectsSection({ className, ...props }: TreeObjectsSectionPr
 		a.open = !a.open;
 
 		setTreeDataForCheckRights(obj);
+	}
+
+	function chooseEntry(e: MouseEvent, value: IEff) {
+		e.stopPropagation();
+		setTargetEntryForCheckRights({ dn: value.dn, attribute_level_rights: value.attribute_level_rights });
 	}
 
 	function drawTree(node: IEff) {
@@ -43,11 +50,21 @@ export function TreeObjectsSection({ className, ...props }: TreeObjectsSectionPr
 										className={cn(styles.lab, {
 											[styles.hide]: value.open !== false,
 											[styles.not_show]: !value.entry_level_rights,
+											[styles.target]: targetEntryForCheckRights.dn == value.dn && value.dn,
 										})}
-										onClick={e => openFolder(e, value.hashIndex)}
 									>
-										<span>{key}</span>
-										{<ColeredPermission rights={value.entry_level_rights} />}
+										<button
+											className={cn(styles.button_icon)}
+											onClick={e => openFolder(e, value.hashIndex)}
+										>
+											{value.open === true ? (
+												<Folder className={styles.icontree} />
+											) : (
+												<OpenFolder className={styles.icontree} />
+											)}
+										</button>
+										<span onClick={e => chooseEntry(e, value)}>{key}</span>
+										{<ColeredPermission className={styles.elr} rights={value.entry_level_rights} />}
 									</span>
 									{drawTree(value)}
 								</div>

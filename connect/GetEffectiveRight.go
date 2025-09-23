@@ -2,14 +2,20 @@ package connect
 
 import (
 	"fmt"
+	"strings"
 
 	ldap "github.com/go-ldap/ldap/v3"
 )
 
+type Right struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
 type EffectiveRight struct {
-	Dn                   string   `json:"dn"`
-	EntryLevelRights     string   `json:"entry_level_rights"`
-	AttributeLevelRights []string `json:"attribute_level_rights"`
+	Dn                   string  `json:"dn"`
+	EntryLevelRights     string  `json:"entry_level_rights"`
+	AttributeLevelRights []Right `json:"attribute_level_rights"`
 }
 
 func GetEffectiveRight(
@@ -42,10 +48,21 @@ func GetEffectiveRight(
 	var listEffectiveRight []EffectiveRight
 	for _, ent := range sr.Entries {
 		var effectiveRight EffectiveRight
+		var rights []Right
 
 		effectiveRight.Dn = ent.DN
 		effectiveRight.EntryLevelRights = ent.GetAttributeValue("entryLevelRights")
-		effectiveRight.AttributeLevelRights = ent.GetAttributeValues("attributeLevelRights")
+		str := strings.TrimSpace(ent.GetAttributeValue("attributeLevelRights"))
+		arr := strings.Split(str, ",")
+		for _, r := range arr {
+			var right Right
+			sub_arr := strings.Split(r, ":")
+			right.Name = sub_arr[0]
+			right.Value = sub_arr[1]
+			rights = append(rights, right)
+		}
+
+		effectiveRight.AttributeLevelRights = rights
 
 		listEffectiveRight = append(listEffectiveRight, effectiveRight)
 	}
