@@ -33,7 +33,11 @@ export function useRequest<T>(url: string) {
 				signal,
 			});
 			if (!response.ok) {
-				throw new Error(`Ошибка HTTP запроса! Статус ошибки ${response.status}`);
+				const t = await response.text();
+				if (!t) {
+					throw new Error(`Ошибка HTTP запроса! Статус ошибки ${response.status}`);
+				}
+				throw new Error(t);
 			}
 
 			const result = await response.json();

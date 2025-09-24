@@ -12,6 +12,16 @@
 	border: 1px solid var(--border-secondary);
 }
 
+.error_message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+
+	text-wrap: balance;
+}
+
 /* блок директория */
 .dir {
 	cursor: pointer;

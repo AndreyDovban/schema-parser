@@ -24,3 +24,13 @@
 .attribute_right_block {
 	grid-area: attribute_right_block;
 }
+
+.error_message {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+
+	height: 100%;
+
+	text-wrap: balance;
+}

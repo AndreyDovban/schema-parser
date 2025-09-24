@@ -12,14 +12,19 @@
 	border: 1px solid var(--border-secondary);
 }
 
-.dn_block {
-	overflow-x: hidden;
+.error_message {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
-	min-height: 24px;
+	height: 100%;
 
+	text-wrap: balance;
+}
+
+.dn_block {
+	overflow: hidden;
+	min-height: 18px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }

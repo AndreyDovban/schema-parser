@@ -51,14 +51,27 @@ func GetEffectiveRight(
 		var rights []Right
 
 		effectiveRight.Dn = ent.DN
-		effectiveRight.EntryLevelRights = ent.GetAttributeValue("entryLevelRights")
+		entryLevelRights := ent.GetAttributeValue("entryLevelRights")
+
+		if entryLevelRights == "" {
+			entryLevelRights = "- - - -"
+		}
+		effectiveRight.EntryLevelRights = entryLevelRights
+
 		str := strings.TrimSpace(ent.GetAttributeValue("attributeLevelRights"))
 		arr := strings.Split(str, ",")
 		for _, r := range arr {
 			var right Right
 			sub_arr := strings.Split(r, ":")
-			right.Name = sub_arr[0]
-			right.Value = sub_arr[1]
+			if len(sub_arr) > 0 {
+				right.Name = sub_arr[0]
+			} else {
+				right.Name = "UNNOWN NAME"
+				right.Value = "UNNOWN VALUE"
+			}
+			if len(sub_arr) > 1 {
+				right.Value = sub_arr[1]
+			}
 			rights = append(rights, right)
 		}
 

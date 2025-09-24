@@ -141,6 +141,7 @@ func main() {
 		result, err := connect.GetEffectiveRight(conn, object.BaseDn, object.ObjectsForCheckRights, object.ScopeForCheckRights)
 		if err != nil {
 			fmt.Println("Get List Permissions Error", err.Error())
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
 		return c.Status(fiber.StatusOK).JSON(result)

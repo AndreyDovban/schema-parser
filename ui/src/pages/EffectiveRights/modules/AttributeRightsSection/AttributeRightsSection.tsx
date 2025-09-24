@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import styles from './AttributeRightsSection.module.css';
-import type { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { Fragment, type DetailedHTMLProps, type HTMLAttributes } from 'react';
 import { Section } from '@/ui';
 import { targetEntryForCheckRightsStore } from '@/store';
 import { ColeredPermission } from '@/components';
@@ -22,10 +22,10 @@ export function AttributeRightsSection({ className, ...props }: AttributeRightsS
 				<div className={styles.wrap}>
 					{targetEntryForCheckRights.attribute_level_rights.map(el => {
 						return (
-							<>
+							<Fragment key={el.name}>
 								<span>{el.name}</span>
 								<ColeredPermission rights={el.value} />
-							</>
+							</Fragment>
 						);
 					})}
 				</div>
