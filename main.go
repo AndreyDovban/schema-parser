@@ -78,11 +78,13 @@ func main() {
 		if err != nil {
 			fmt.Println("Get SubSchema Dn Error", err.Error())
 			conn.Close()
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 		schema, err := connect.GetSchema(conn, store.BaseDn)
 		if err != nil {
 			fmt.Println("Get Schema Error", err.Error())
 			conn.Close()
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
 		return c.Status(fiber.StatusOK).JSON(schema)
@@ -93,6 +95,7 @@ func main() {
 		if err != nil {
 			fmt.Println("Get SubSchema Dn Error", err.Error())
 			conn.Close()
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
 		return c.Status(fiber.StatusOK).JSON(schema)
@@ -108,6 +111,7 @@ func main() {
 		objectClasses, err := connect.GetEntityByDn(conn, dn.BaseDn)
 		if err != nil {
 			fmt.Println("Get Entity By Dn Error", err.Error())
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
 		return c.Status(fiber.StatusOK).JSON(objectClasses)
@@ -119,6 +123,7 @@ func main() {
 		aci, err := connect.GetAciEntityByDn(conn, dn.BaseDn)
 		if err != nil {
 			fmt.Println("Get Aci For Entity Error", err.Error())
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
 		return c.Status(fiber.StatusOK).JSON(aci)
@@ -130,6 +135,7 @@ func main() {
 		aci, err := connect.GetListPermissions(conn, dn.BaseDn)
 		if err != nil {
 			fmt.Println("Get List Permissions Error", err.Error())
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
 		return c.Status(fiber.StatusOK).JSON(aci)
@@ -140,7 +146,43 @@ func main() {
 		c.BodyParser(&object)
 		result, err := connect.GetEffectiveRight(conn, object.BaseDn, object.ObjectsForCheckRights, object.ScopeForCheckRights)
 		if err != nil {
-			fmt.Println("Get List Permissions Error", err.Error())
+			fmt.Println("Get Effective Rights Error", err.Error())
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
+		}
+
+		return c.Status(fiber.StatusOK).JSON(result)
+	})
+
+	app.Post("/api/show_ldap_catalog", func(c *fiber.Ctx) error {
+		var object Entity
+		c.BodyParser(&object)
+		result, err := connect.ShowLdapCatalog(conn, object.BaseDn)
+		if err != nil {
+			fmt.Println("Get Show Ldap Catalog Error", err.Error())
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
+		}
+
+		return c.Status(fiber.StatusOK).JSON(result)
+	})
+
+	app.Post("/api/show_children_container", func(c *fiber.Ctx) error {
+		var object Entity
+		c.BodyParser(&object)
+		result, err := connect.ShowChildrenContainer(conn, object.BaseDn)
+		if err != nil {
+			fmt.Println("Get Show Children Container Error", err.Error())
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
+		}
+
+		return c.Status(fiber.StatusOK).JSON(result)
+	})
+
+	app.Post("/api/get_target_entry", func(c *fiber.Ctx) error {
+		var object Entity
+		c.BodyParser(&object)
+		result, err := connect.GetTargetEntry(conn, object.BaseDn)
+		if err != nil {
+			fmt.Println("Get Target Rntry Error", err.Error())
 			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 

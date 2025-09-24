@@ -8,6 +8,7 @@ import BuilerOject from '@/assets/svg/builder_object.svg?react';
 import FingerPrint from '@/assets/svg/fingerprint.svg?react';
 import Eye from '@/assets/svg/eye.svg?react';
 import Mask from '@/assets/svg/mask.svg?react';
+import Tree from '@/assets/svg/tree.svg?react';
 
 interface NavProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 	className?: string;
@@ -71,6 +72,15 @@ export function Nav({ className, ...props }: NavProps) {
 				title="просмотр прав доступа"
 			>
 				<Mask />
+			</Link>
+			<Link
+				className={cn(styles.icon, {
+					[styles.active]: location.pathname == '/ldapbrowser',
+				})}
+				to="/ldapbrowser"
+				title="просмотр прав доступа"
+			>
+				<Tree />
 			</Link>
 		</nav>
 	);

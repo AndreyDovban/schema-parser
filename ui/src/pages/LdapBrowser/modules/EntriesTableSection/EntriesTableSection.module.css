@@ -1,0 +1,26 @@
+.entries_table_section_section {
+	overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-4);
+
+	min-width: 300px;
+	padding: var(--s-4);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}
+
+.error_message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+
+	text-wrap: balance;
+}
+
+.hide {
+	display: none;
+}

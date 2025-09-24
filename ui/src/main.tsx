@@ -2,7 +2,16 @@ import './styles/index.css';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
-import { Attributes, ObjectClasses, Builder, Home, AciConstructor, Permissions, EffectiveRights } from '@/pages';
+import {
+	Attributes,
+	ObjectClasses,
+	Builder,
+	Home,
+	AciConstructor,
+	Permissions,
+	EffectiveRights,
+	LdapBrowser,
+} from '@/pages';
 // import { RecoilRoot } from 'recoil';
 
 const router = createBrowserRouter([
@@ -33,6 +42,10 @@ const router = createBrowserRouter([
 	{
 		path: '/geteffectiverights',
 		element: <EffectiveRights />,
+	},
+	{
+		path: '/ldapbrowser',
+		element: <LdapBrowser />,
 	},
 ]);
 

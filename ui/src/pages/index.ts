@@ -5,3 +5,4 @@ export * from './Home/Home';
 export * from './AciConstructor/AciConstructor';
 export * from './Permissions/Permissions';
 export * from './EffectiveRights/EffectiveRights';
+export * from './LdapBrowser/LdapBrowser';

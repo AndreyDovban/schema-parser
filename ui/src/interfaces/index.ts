@@ -82,3 +82,17 @@ export type IEff = {
 	open: boolean;
 	hashIndex: string[];
 };
+
+export interface IEntryInCatalog {
+	dn: string;
+	attributes: Record<string, string[]>[];
+}
+
+export interface IEIC {
+	[key: string]: string | string[] | boolean | IEIC | Record<string, string[]>[] | undefined;
+
+	dn: string;
+	hashIndex: string[];
+	open: boolean;
+	attributes: Record<string, string[]>[];
+}

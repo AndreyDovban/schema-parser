@@ -1,0 +1,144 @@
+.tree_section {
+	overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-1);
+
+	min-width: 300px;
+	padding: var(--s-4);
+
+	background: var(--background-secondary);
+	border: 1px solid var(--border-secondary);
+}
+
+.error_message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+
+	text-wrap: balance;
+}
+
+/* блок директория */
+.dir {
+	cursor: pointer;
+
+	position: relative;
+
+	padding: 0.1rem;
+	padding-left: 2rem;
+
+	font-weight: 500;
+}
+
+/* элемент отрисовки ветки дерева */
+.dir::before {
+	content: '';
+
+	position: absolute;
+	top: -5001.3rem;
+	left: 1rem;
+
+	width: 1rem;
+	height: 5002rem;
+
+	border-bottom: 1px solid rgb(128 128 128);
+	border-left: 1px solid rgb(128 128 128);
+	border-bottom-left-radius: 3px;
+}
+
+/* блок для названия объекта */
+.lab {
+	position: relative;
+	display: flex;
+	gap: 0.2rem;
+	min-height: 1.2rem;
+}
+
+/* кнокпка с иконкой */
+.button_icon {
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: none;
+	border: none;
+}
+
+.button_icon svg {
+	width: 20px;
+	height: 20px;
+	fill: var(--text-secondary);
+}
+
+.icon {
+	width: 20px;
+	height: 20px;
+	fill: var(--text-secondary);
+}
+
+/* блок для скрываемого содержимого контейнера */
+.content {
+	overflow: hidden;
+}
+
+/* эффект наведения для лэйюэла директории */
+.lab:hover {
+	cursor: pointer;
+	color: var(--green);
+}
+
+/* эффект активность для лэйбла директории */
+.lab:active {
+	color: var(--green);
+	fill: var(--green);
+}
+
+/* эффект наведения для иконок лэйбэла директории */
+.lab:hover .icontree {
+	fill: var(--green);
+}
+
+/* эффект активность для иконок лэйбэла директории */
+.lab:active .icontree {
+	fill: var(--green);
+}
+
+/* стиль  для скрытия иконок "папки" */
+.close {
+	display: none;
+}
+
+/* стиль для скрытия контента */
+.hide ~ div {
+	display: none;
+}
+
+/* стиль для кнопок с иконками в контейнерах */
+.is_node {
+	display: none;
+}
+
+/* стиль для выбранного объекта */
+.target {
+	color: var(--green);
+}
+
+.target svg {
+	fill: var(--green);
+}
+
+/* стиль для обозначения непросмотренных записей */
+.not_show {
+	color: var(--text-secondary);
+	fill: var(--text-secondary);
+}
+
+/* стиль для обозначения EntryLevelRights  */
+.elr {
+	margin-left: 1rem;
+}

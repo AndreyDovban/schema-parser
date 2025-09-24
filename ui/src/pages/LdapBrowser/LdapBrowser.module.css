@@ -1,0 +1,42 @@
+.ldap_browser {
+	display: grid;
+	grid-template-areas:
+		'search_block search_block search_block'
+		'tree_block entries_table_block one_entry_block';
+	grid-template-columns: auto auto 1fr;
+	grid-template-rows: auto 1fr;
+	gap: var(--s-2);
+
+	height: 100%;
+}
+
+/* блок для поиска контейнера с проверкой прав */
+.search_block {
+	grid-area: search_block;
+}
+
+/* блок вывода ответа */
+.tree_block {
+	grid-area: tree_block;
+}
+
+/* блок показа таблицы записей контейнера */
+.entries_table_block {
+	grid-area: entries_table_block;
+	width: 600px;
+}
+
+/* блок показа одной записи */
+.one_entry_block {
+	grid-area: one_entry_block;
+}
+
+.error_message {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+
+	height: 100%;
+
+	text-wrap: balance;
+}
