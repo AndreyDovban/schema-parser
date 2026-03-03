@@ -95,6 +95,7 @@ export function SearchSection({ className, ...props }: SearchSectionProps) {
 			setRequiredAttrs(req);
 			setChoosedObjectClasses(objectClassesArr);
 			setTargetPseudoObjectClass({ name: '', attrs: [] });
+			console.log(JSON.stringify(namesArr, null, 4));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
